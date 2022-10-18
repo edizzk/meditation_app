@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.example.meditation_app.R
 import com.example.meditation_app.databinding.FragmentLoginBinding
 import com.example.meditation_app.utils.UiState
+import com.example.meditation_app.utils.isValidEmail
 import com.example.meditation_app.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,10 +31,12 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observer()
         binding.loginButton.setOnClickListener {
-            viewModel.login(
-                email = binding.emailEditText.text.toString(),
-                password = binding.passwordEditText.text.toString()
-            )
+            if (validation()) {
+                viewModel.login(
+                    email = binding.emailEditText.text.toString(),
+                    password = binding.passwordEditText.text.toString()
+                )
+            }
         }
     }
 
@@ -49,6 +53,30 @@ class LoginFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun validation(): Boolean {
+        var isValid = true
+
+        if (binding.emailEditText.text.isNullOrEmpty()){
+            isValid = false
+            toast(getString(R.string.enter_email))
+        }else{
+            if (!binding.emailEditText.text.toString().isValidEmail()){
+                isValid = false
+                toast(getString(R.string.invalid_email))
+            }
+        }
+        if (binding.passwordEditText.text.isNullOrEmpty()){
+            isValid = false
+            toast(getString(R.string.enter_password))
+        }else{
+            if (binding.passwordEditText.text.toString().length < 8){
+                isValid = false
+                toast(getString(R.string.invalid_password))
+            }
+        }
+        return isValid
     }
 
     companion object {
