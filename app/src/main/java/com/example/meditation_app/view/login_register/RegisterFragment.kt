@@ -31,13 +31,15 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observer()
-        binding.registerButton.setOnClickListener {
-            if (validation()){
-                viewModel.register(
-                    email = binding.emailEditText.text.toString(),
-                    password = binding.passwordEditText.text.toString(),
-                    user = getUserObj()
-                )
+        binding.apply {
+            registerButton.setOnClickListener {
+                if (validation()){
+                    viewModel.register(
+                        email = emailEditText.text.toString(),
+                        password = passwordEditText.text.toString(),
+                        user = getUserObj()
+                    )
+                }
             }
         }
     }

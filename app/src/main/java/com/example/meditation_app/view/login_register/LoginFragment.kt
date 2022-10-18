@@ -30,12 +30,14 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observer()
-        binding.loginButton.setOnClickListener {
-            if (validation()) {
-                viewModel.login(
-                    email = binding.emailEditText.text.toString(),
-                    password = binding.passwordEditText.text.toString()
-                )
+        binding.apply {
+            loginButton.setOnClickListener{
+                if (validation()) {
+                    viewModel.login(
+                        email = emailEditText.text.toString(),
+                        password = passwordEditText.text.toString()
+                    )
+                }
             }
         }
     }
