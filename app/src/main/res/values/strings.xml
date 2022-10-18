@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">Meditation App</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="register">ÜYE OL</string>
+    <string name="login">GİRİŞ YAP</string>
+    <string name="name">Ad</string>
+    <string name="surname">Soyad</string>
+    <string name="email">E Posta</string>
+    <string name="password">Şifre</string>
+    <string name="remember_me">BENİ HATIRLA</string>
+    <string name="enter_first_name">İsminizi Girin</string>
+    <string name="enter_last_name">Soyisminizi Girin</string>
+    <string name="enter_email">E-mail Adresinizi Girin</string>
+    <string name="invalid_email">Geçersiz E-mail Adresi</string>
+    <string name="enter_password">Şifrenizi Girin</string>
+    <string name="invalid_password">Şifreniz En Az 8 Karakter Olmalı</string>
 </resources>
