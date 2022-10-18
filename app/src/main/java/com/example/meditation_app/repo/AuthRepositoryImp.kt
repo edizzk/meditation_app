@@ -76,4 +76,18 @@ class AuthRepositoryImp(
             }
     }
 
+    override fun loginUser(
+        email: String,
+        password: String,
+        result: (UiState<String>) -> Unit) {
+            auth.signInWithEmailAndPassword(email,password)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        result.invoke(UiState.Success("Login successfully!"))
+                    }
+                }.addOnFailureListener {
+                    result.invoke(UiState.Failure("Authentication failed, Check email and password"))
+                }
+    }
+
 }
