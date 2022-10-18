@@ -14,6 +14,12 @@ object FirebaseModule {
 
     @Provides
     @Singleton
+    fun provideFireStoreInstance(): FirebaseFirestore{
+        return FirebaseFirestore.getInstance()
+    }
+
+    @Provides
+    @Singleton
     fun provideFirebaseAuthInstance(): FirebaseAuth {
         return FirebaseAuth.getInstance()
     }
