@@ -5,13 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.example.meditation_app.databinding.FragmentRegisterBinding
+import com.example.meditation_app.model.User
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
 
     private lateinit var binding: FragmentRegisterBinding
+    private val viewModel: AuthViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -19,6 +22,26 @@ class RegisterFragment : Fragment() {
     ): View {
         binding = FragmentRegisterBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.registerButton.setOnClickListener {
+                viewModel.register(
+                    email = binding.emailEditText.text.toString(),
+                    password = binding.passwordEditText.text.toString(),
+                    user = getUserObj()
+                )
+        }
+    }
+
+    private fun getUserObj(): User {
+        return User(
+            id = "",
+            first_name = binding.firstNameEditText.text.toString(),
+            last_name = binding.lastNameEditText.text.toString(),
+            email = binding.emailEditText.text.toString(),
+        )
     }
 
     companion object {
