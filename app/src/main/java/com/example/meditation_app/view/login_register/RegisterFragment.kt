@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.example.meditation_app.R
 import com.example.meditation_app.databinding.FragmentRegisterBinding
 import com.example.meditation_app.model.User
 import com.example.meditation_app.utils.UiState
+import com.example.meditation_app.utils.isValidEmail
 import com.example.meditation_app.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,11 +32,13 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observer()
         binding.registerButton.setOnClickListener {
-            viewModel.register(
-                email = binding.emailEditText.text.toString(),
-                password = binding.passwordEditText.text.toString(),
-                user = getUserObj()
-            )
+            if (validation()){
+                viewModel.register(
+                    email = binding.emailEditText.text.toString(),
+                    password = binding.passwordEditText.text.toString(),
+                    user = getUserObj()
+                )
+            }
         }
     }
 
@@ -61,6 +65,37 @@ class RegisterFragment : Fragment() {
             last_name = binding.lastNameEditText.text.toString(),
             email = binding.emailEditText.text.toString(),
         )
+    }
+
+    private fun validation(): Boolean {
+        var isValid = true
+        if (binding.firstNameEditText.text.isNullOrEmpty()){
+            isValid = false
+            toast(getString(R.string.enter_first_name))
+        }
+        if (binding.lastNameEditText.text.isNullOrEmpty()){
+            isValid = false
+            toast(getString(R.string.enter_last_name))
+        }
+        if (binding.emailEditText.text.isNullOrEmpty()){
+            isValid = false
+            toast(getString(R.string.enter_email))
+        }else{
+            if (!binding.emailEditText.text.toString().isValidEmail()){
+                isValid = false
+                toast(getString(R.string.invalid_email))
+            }
+        }
+        if (binding.passwordEditText.text.isNullOrEmpty()){
+            isValid = false
+            toast(getString(R.string.enter_password))
+        }else{
+            if (binding.passwordEditText.text.toString().length < 8){
+                isValid = false
+                toast(getString(R.string.invalid_password))
+            }
+        }
+        return isValid
     }
 
     companion object {
