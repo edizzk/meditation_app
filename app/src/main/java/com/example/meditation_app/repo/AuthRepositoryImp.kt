@@ -23,9 +23,19 @@ class AuthRepositoryImp(
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener{
                 if (it.isSuccessful) {
-                    result.invoke(
-                        UiState.Success("User registered successfully!")
-                    )
+                    addUser(user) { state ->
+                        when(state){
+                            is UiState.Success -> {
+                                result.invoke(
+                                    UiState.Success("User registered successfully!")
+                                )
+                            }
+                            is UiState.Failure -> {
+                                result.invoke(UiState.Failure(state.error))
+                            }
+                            else -> {}
+                        }
+                    }
                 }else {
                     try {
                         throw it.exception ?: Exception("Invalid authentication")
