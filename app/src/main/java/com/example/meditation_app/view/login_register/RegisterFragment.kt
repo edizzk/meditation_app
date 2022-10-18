@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.meditation_app.databinding.FragmentRegisterBinding
 import com.example.meditation_app.model.User
+import com.example.meditation_app.utils.UiState
+import com.example.meditation_app.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,12 +28,29 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observer()
         binding.registerButton.setOnClickListener {
-                viewModel.register(
-                    email = binding.emailEditText.text.toString(),
-                    password = binding.passwordEditText.text.toString(),
-                    user = getUserObj()
-                )
+            viewModel.register(
+                email = binding.emailEditText.text.toString(),
+                password = binding.passwordEditText.text.toString(),
+                user = getUserObj()
+            )
+        }
+    }
+
+    private fun observer() {
+        viewModel.register.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Loading -> {
+
+                }
+                is UiState.Failure -> {
+                    toast(state.error)
+                }
+                is UiState.Success -> {
+                    toast(state.data)
+                }
+            }
         }
     }
 
