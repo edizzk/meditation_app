@@ -1,4 +1,4 @@
-package com.example.meditation_app.view.login_register
+package com.example.meditation_app.view.auth
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
