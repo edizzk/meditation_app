@@ -3,7 +3,7 @@ package com.example.meditation_app
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.meditation_app.databinding.ActivityMainBinding
-import com.example.meditation_app.utils.UiText
+import com.example.meditation_app.utils.UiString
 import com.example.meditation_app.view.auth.LoginFragment
 import com.example.meditation_app.view.auth.RegisterFragment
 import com.example.meditation_app.view.auth.ViewPagerAdapter
@@ -29,8 +29,8 @@ class MainActivity : AppCompatActivity() {
             LoginFragment.create()
         )
         val fragmentTitleList = listOf(
-            UiText.StringResources(R.string.register).asString(applicationContext),
-            UiText.StringResources(R.string.login).asString(applicationContext)
+            UiString.StringResources(R.string.register).asString(applicationContext),
+            UiString.StringResources(R.string.login).asString(applicationContext)
         )
 
         val adapter = ViewPagerAdapter(this, fragmentList)
