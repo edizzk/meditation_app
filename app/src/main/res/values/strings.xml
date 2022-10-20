@@ -13,4 +13,15 @@
     <string name="invalid_email">Geçersiz E-mail Adresi</string>
     <string name="enter_password">Şifrenizi Girin</string>
     <string name="invalid_password">Şifreniz En Az 8 Karakter Olmalı</string>
+    <string name="recaptcha_text">"I'm not a robot"</string>
+    <string name="conditions_1">
+        “Üye Ol” butonuna basarak Mobven Üyelik Sözleşmesi’ni, kişiselleştirilmiş pazarlamaya ilişkin Açık Rıza
+        Metni’ni, yurt dışına aktarıma ilişkin Açık Rıza Metni’ni okuduğunuzu ve kabul ettiğinizi onaylıyorsunuz.
+    </string>
+    <string name="conditions_2">
+        İletişim bilgilerinizin duyuru, yenilikler, reklam promosyon vb. ticari elektronik ileti gönderilmek
+        üzere işlenmesi ve bu amaçla kullanılması, saklanması ve ticari elektronik ileti gönderilmesi ve bu
+        gönderimin sağlanması için DeFactoFit’in hizmet aldığı üçüncü kişilerle paylaşması için Elektronik Ticari
+        İleti Bilgilendirme metnini okuduğunuzu ve kabul ettiğinizi onaylıyorsunuz.
+    </string>
 </resources>
