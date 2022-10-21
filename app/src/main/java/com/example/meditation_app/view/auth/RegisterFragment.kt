@@ -41,6 +41,24 @@ class RegisterFragment : Fragment() {
         binding.apply {
             conditionText1.setText(conditionText1.text.toString().makeItUnderlineAndBold(), TextView.BufferType.SPANNABLE)
             conditionText1.movementMethod = LinkMovementMethod.getInstance()
+            reCaptcha.setOnClickListener{
+                if(!reCaptcha.isChecked) {
+                    return@setOnClickListener
+                }
+                reCaptcha.isChecked = false
+                viewModel.captcha(requireActivity()) {
+                    when(it){
+                        is UiState.Success -> {
+                            reCaptcha.isChecked = true
+                        }
+                        is UiState.Failure -> {
+                            toast(it.error)
+                            reCaptcha.isChecked = false
+                        }
+                        else -> {}
+                    }
+                }
+            }
             registerButton.setOnClickListener {
                 if (validation()){
                     viewModel.register(

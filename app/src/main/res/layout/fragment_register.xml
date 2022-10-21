@@ -132,10 +132,10 @@
             android:gravity="center"
             android:orientation="horizontal">
             <CheckBox
-                android:id="@+id/GoogleCaptcha"
+                android:id="@+id/reCaptcha"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/grey"/>
+                android:buttonTint="@color/grey" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
