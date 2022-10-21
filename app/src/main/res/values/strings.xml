@@ -24,4 +24,6 @@
         gönderimin sağlanması için DeFactoFit’in hizmet aldığı üçüncü kişilerle paylaşması için Elektronik Ticari
         İleti Bilgilendirme metnini okuduğunuzu ve kabul ettiğinizi onaylıyorsunuz.
     </string>
+    <string name="information">"Bilgilendirme"</string>
+    <string name="not_availabe">"Bu özellik şu an için aktif değil!"</string>
 </resources>
