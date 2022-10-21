@@ -115,7 +115,7 @@ class RegisterFragment : Fragment() {
         ss.setSpan(StyleSpan(Typeface.BOLD), 0, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         val clickableSpan1: ClickableSpan = object : ClickableSpan() {
-            override fun onClick(widget: View) = Unit
+            override fun onClick(widget: View) = notAvailableAlert(requireContext())
             override fun updateDrawState(textPaint: TextPaint) {
                 textPaint.color = getColor(requireContext(), R.color.spannable_color)
                 textPaint.isUnderlineText = true
@@ -125,7 +125,7 @@ class RegisterFragment : Fragment() {
         ss.setSpan(StyleSpan(Typeface.BOLD), 33, 50, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         val clickableSpan2: ClickableSpan = object : ClickableSpan() {
-            override fun onClick(widget: View) = Unit
+            override fun onClick(widget: View) = notAvailableAlert(requireContext())
             override fun updateDrawState(textPaint: TextPaint) {
                 textPaint.color = getColor(requireContext(), R.color.spannable_color)
                 textPaint.isUnderlineText = true
