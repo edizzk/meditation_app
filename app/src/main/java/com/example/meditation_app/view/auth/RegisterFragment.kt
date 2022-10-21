@@ -60,6 +60,17 @@ class RegisterFragment : Fragment() {
                 }
             }
             registerButton.setOnClickListener {
+                if(!(conditionCheckBox1.isChecked && conditionCheckBox2.isChecked)) {
+                    errorCardView.visibility = View.VISIBLE
+                    errorCardText.text = UiString.StringResources(R.string.approve_terms_and_conditions).asString(requireContext())
+                    return@setOnClickListener
+                }
+                if(!reCaptcha.isChecked) {
+                    errorCardView.visibility = View.VISIBLE
+                    errorCardText.text = UiString.StringResources(R.string.error_recaptcha).asString(requireContext())
+                    return@setOnClickListener
+                }
+
                 if (validation()){
                     viewModel.register(
                         email = emailEditText.text.toString(),
@@ -74,15 +85,13 @@ class RegisterFragment : Fragment() {
     private fun observer() {
         viewModel.register.observe(viewLifecycleOwner) { state ->
             when (state) {
-                is UiState.Loading -> {
-
-                }
                 is UiState.Failure -> {
                     toast(state.error)
                 }
                 is UiState.Success -> {
                     toast(state.data)
                 }
+                else -> {}
             }
         }
     }

@@ -26,4 +26,6 @@
     </string>
     <string name="information">"Bilgilendirme"</string>
     <string name="not_availabe">"Bu özellik şu an için aktif değil!"</string>
+    <string name="approve_terms_and_conditions">"Lütfen Sözleşmeleri ve Şartları Onaylayın."</string>
+    <string name="error_recaptcha">"Lütfen Robot Olmadığınızı Doğrulayın."</string>
 </resources>
