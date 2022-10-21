@@ -70,13 +70,22 @@ class RegisterFragment : Fragment() {
                     errorCardText.text = UiString.StringResources(R.string.error_recaptcha).asString(requireContext())
                     return@setOnClickListener
                 }
-
-                if (validation()){
-                    viewModel.register(
-                        email = emailEditText.text.toString(),
-                        password = passwordEditText.text.toString(),
-                        user = getUserObj()
-                    )
+                viewModel.validation(binding, requireContext()){
+                    when(it) {
+                        is UiState.Success -> {
+                            errorCardView.visibility = View.GONE
+                            viewModel.register(
+                                email = emailEditText.text.toString(),
+                                password = passwordEditText.text.toString(),
+                                user = getUserObj()
+                            )
+                        }
+                        is UiState.Failure -> {
+                            errorCardView.visibility = View.VISIBLE
+                            errorCardText.text = it.error
+                        }
+                        else -> {}
+                    }
                 }
             }
         }
@@ -103,37 +112,6 @@ class RegisterFragment : Fragment() {
             last_name = binding.lastNameEditText.text.toString(),
             email = binding.emailEditText.text.toString(),
         )
-    }
-
-    private fun validation(): Boolean {
-        var isValid = true
-        if (binding.firstNameEditText.text.isNullOrEmpty()){
-            isValid = false
-            toast(getString(R.string.enter_first_name))
-        }
-        if (binding.lastNameEditText.text.isNullOrEmpty()){
-            isValid = false
-            toast(getString(R.string.enter_last_name))
-        }
-        if (binding.emailEditText.text.isNullOrEmpty()){
-            isValid = false
-            toast(getString(R.string.enter_email))
-        }else{
-            if (!binding.emailEditText.text.toString().isValidEmail()){
-                isValid = false
-                toast(getString(R.string.invalid_email))
-            }
-        }
-        if (binding.passwordEditText.text.isNullOrEmpty()){
-            isValid = false
-            toast(getString(R.string.enter_password))
-        }else{
-            if (binding.passwordEditText.text.toString().length < 8){
-                isValid = false
-                toast(getString(R.string.invalid_password))
-            }
-        }
-        return isValid
     }
 
     private fun String.makeItUnderlineAndBold(): SpannableString {
