@@ -1,17 +1,24 @@
 package com.example.meditation_app.view.auth
 
+import android.graphics.Typeface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat.getColor
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.meditation_app.R
 import com.example.meditation_app.databinding.FragmentRegisterBinding
 import com.example.meditation_app.model.User
-import com.example.meditation_app.utils.UiState
-import com.example.meditation_app.utils.isValidEmail
-import com.example.meditation_app.utils.toast
+import com.example.meditation_app.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,6 +39,8 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observer()
         binding.apply {
+            conditionText1.setText(conditionText1.text.toString().makeItUnderlineAndBold(), TextView.BufferType.SPANNABLE)
+            conditionText1.movementMethod = LinkMovementMethod.getInstance()
             registerButton.setOnClickListener {
                 if (validation()){
                     viewModel.register(
@@ -98,6 +107,33 @@ class RegisterFragment : Fragment() {
             }
         }
         return isValid
+    }
+
+    private fun String.makeItUnderlineAndBold(): SpannableString {
+        val ss = SpannableString(this)
+
+        ss.setSpan(StyleSpan(Typeface.BOLD), 0, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        val clickableSpan1: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) = Unit
+            override fun updateDrawState(textPaint: TextPaint) {
+                textPaint.color = getColor(requireContext(), R.color.spannable_color)
+                textPaint.isUnderlineText = true
+            }
+        }
+        ss.setSpan(clickableSpan1, 33, 50, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        ss.setSpan(StyleSpan(Typeface.BOLD), 33, 50, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        val clickableSpan2: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) = Unit
+            override fun updateDrawState(textPaint: TextPaint) {
+                textPaint.color = getColor(requireContext(), R.color.spannable_color)
+                textPaint.isUnderlineText = true
+            }
+        }
+        ss.setSpan(clickableSpan2, 94, 109, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        ss.setSpan(StyleSpan(Typeface.BOLD), 94, 109, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        return ss
     }
 
     companion object {
