@@ -95,7 +95,7 @@ class AuthViewModel @Inject constructor(
                 UiString.StringResources(R.string.enter_email).asString(context)
             ))
             return
-        }else{
+        }else {
             if (!binding.emailEditText.text.toString().isValidEmail()){
                 result.invoke(UiState.Failure(
                     UiString.StringResources(R.string.invalid_email).asString(context)
@@ -109,11 +109,25 @@ class AuthViewModel @Inject constructor(
             ))
             return
         }else{
-            if (binding.passwordEditText.text.toString().length < 8){
+            if (binding.passwordEditText.text.toString().length < 6){
                 result.invoke(UiState.Failure(
                     UiString.StringResources(R.string.invalid_password).asString(context)
                 ))
                 return
+            }else {
+                if(!binding.passwordEditText.text.toString().hasUpperCase()){
+                    result.invoke(UiState.Failure(
+                        UiString.StringResources(R.string.has_not_uppercase).asString(context)
+                    ))
+                    return
+                }else {
+                    if(!binding.passwordEditText.text.toString().hasDigit()){
+                        result.invoke(UiState.Failure(
+                            UiString.StringResources(R.string.has_not_digit).asString(context)
+                        ))
+                        return
+                    }
+                }
             }
         }
         result.invoke(UiState.Success(""))
