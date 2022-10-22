@@ -14,6 +14,10 @@ fun Fragment.toast(msg: String?){
 fun String.isValidEmail() =
     isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
 
+fun String.hasDigit() = any(Char::isDigit)
+
+fun String.hasUpperCase() = any(Char::isUpperCase)
+
 fun notAvailableAlert(context: Context){
     val builder = AlertDialog.Builder(context)
     builder.setTitle(UiString.StringResources(R.string.information).asString(context))
