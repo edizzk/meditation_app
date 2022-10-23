@@ -29,31 +29,17 @@ class AuthViewModel @Inject constructor(
     val login: LiveData<UiState<String>>
         get() = _login
 
-    fun register(
-        email: String,
-        password: String,
-        user: User
-    ) {
+    fun register(email: String, password: String, user: User) {
        _register.value = UiState.Loading
-        repository.registerUser(
-            email = email,
-            password = password,
-            user = user
-        ) { _register.value = it }
+        repository.registerUser(email, password, user) { _register.value = it }
     }
 
-    fun login(
-        email: String,
-        password: String
-    ) {
+    fun login(email: String,password: String, rememberMe: Boolean) {
         _login.value = UiState.Loading
-        repository.loginUser(
-            email,
-            password
-        ){
-            _login.value = it
-        }
+        repository.loginUser(email, password, rememberMe){ _login.value = it }
     }
+
+    fun getRememberMePref(result: (User?) -> Unit) = repository.getRememberMePref(result)
 
     fun captcha(activity: FragmentActivity, result: (UiState<String>) -> Unit) {
         SafetyNet.getClient(activity).verifyWithRecaptcha(siteKey)

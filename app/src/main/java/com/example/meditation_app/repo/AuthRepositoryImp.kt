@@ -1,13 +1,17 @@
 package com.example.meditation_app.repo
 
+import android.content.SharedPreferences
+import android.util.Log
 import com.example.meditation_app.model.User
 import com.example.meditation_app.utils.FireStoreCollection
+import com.example.meditation_app.utils.SharedPrefConstants.USER_PREF
 import com.example.meditation_app.utils.UiState
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.gson.Gson
 import javax.inject.Inject
 
@@ -84,15 +88,46 @@ class AuthRepositoryImp @Inject constructor(
     override fun loginUser(
         email: String,
         password: String,
+        rememberMe: Boolean,
         result: (UiState<String>) -> Unit) {
             auth.signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         result.invoke(UiState.Success("Login successfully!"))
+                        if (rememberMe){
+                            saveRememberMePref(task.result.user?.uid ?: ""){ state ->
+                                when(state) {
+                                    is UiState.Success -> {
+                                        Log.d(tag, "Success: remember me pref is created")
+                                    }
+                                    is UiState.Failure -> {
+                                        Log.d(tag, "Failure: ${state.error}")
+                                    }
+                                    else -> {}
+                                }
+                            }
+                        }
                     }
                 }.addOnFailureListener {
                     result.invoke(UiState.Failure("Authentication failed, Check email and password"))
                 }
+    }
+
+    override fun saveRememberMePref(id: String, result: (UiState<String>?) -> Unit){
+        database.collection(FireStoreCollection.USER).document(id)
+            .get()
+            .addOnCompleteListener {
+                if (it.isSuccessful){
+                    val user = it.result.toObject<User>()
+                    appPreferences.edit().putString(USER_PREF,gson.toJson(user)).apply()
+                    result.invoke(UiState.Success("Remember me successfully"))
+                }else{
+                    result.invoke(UiState.Failure(it.exception.toString()))
+                }
+            }
+            .addOnFailureListener {
+                result.invoke(UiState.Failure(it.toString()))
+            }
     }
 
     override fun getRememberMePref(result: (User?) -> Unit) {
