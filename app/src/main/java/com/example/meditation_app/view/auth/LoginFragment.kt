@@ -1,6 +1,7 @@
 package com.example.meditation_app.view.auth
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +39,17 @@ class LoginFragment : Fragment() {
                         password = passwordEditText.text.toString()
                     )
                 }
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.getRememberMePref {
+            if (it != null){
+                //nav to home
+            }else {
+                Log.d("TEST, ", "Failure:  $it")
             }
         }
     }
