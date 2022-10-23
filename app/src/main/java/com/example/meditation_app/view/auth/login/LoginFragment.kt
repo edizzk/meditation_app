@@ -45,7 +45,6 @@ class LoginFragment : Fragment() {
                             errorCardView.visibility = View.VISIBLE
                             errorCardText.text = it.error
                         }
-                        else -> {}
                     }
                 }
             }
@@ -66,8 +65,6 @@ class LoginFragment : Fragment() {
     private fun observer(){
         viewModel.login.observe(viewLifecycleOwner) { state ->
             when(state){
-                is UiState.Loading -> {
-                }
                 is UiState.Failure -> {
                     binding.errorCardView.visibility = View.VISIBLE
                     binding.errorCardText.text = state.error

@@ -26,7 +26,6 @@ class RegisterViewModel @Inject constructor(
         get() = _register
 
     fun register(email: String, password: String, user: User) {
-        _register.value = UiState.Loading
         repository.registerUser(email, password, user) { _register.value = it }
     }
 

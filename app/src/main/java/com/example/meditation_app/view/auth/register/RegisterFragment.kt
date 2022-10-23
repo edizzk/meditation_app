@@ -55,7 +55,6 @@ class RegisterFragment : Fragment() {
                             toast(it.error)
                             reCaptcha.isChecked = false
                         }
-                        else -> {}
                     }
                 }
             }
@@ -84,7 +83,6 @@ class RegisterFragment : Fragment() {
                             errorCardView.visibility = View.VISIBLE
                             errorCardText.text = it.error
                         }
-                        else -> {}
                     }
                 }
             }
@@ -102,7 +100,6 @@ class RegisterFragment : Fragment() {
                     binding.errorCardView.visibility = View.GONE
                     toast(state.data)
                 }
-                else -> {}
             }
         }
     }

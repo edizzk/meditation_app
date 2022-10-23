@@ -22,7 +22,6 @@ class LoginViewModel @Inject constructor(
         get() = _login
 
     fun login(email: String,password: String, rememberMe: Boolean) {
-        _login.value = UiState.Loading
         repository.loginUser(email, password, rememberMe){ _login.value = it }
     }
 

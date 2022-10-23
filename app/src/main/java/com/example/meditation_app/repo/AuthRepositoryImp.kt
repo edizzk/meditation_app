@@ -43,7 +43,6 @@ class AuthRepositoryImp @Inject constructor(
                             is UiState.Failure -> {
                                 result.invoke(UiState.Failure(state.error))
                             }
-                            else -> {}
                         }
                     }
                 }else {
@@ -103,7 +102,6 @@ class AuthRepositoryImp @Inject constructor(
                                     is UiState.Failure -> {
                                         Log.d(tag, "Failure: ${state.error}")
                                     }
-                                    else -> {}
                                 }
                             }
                         }
@@ -113,7 +111,7 @@ class AuthRepositoryImp @Inject constructor(
                 }
     }
 
-    override fun saveRememberMePref(id: String, result: (UiState<String>?) -> Unit){
+    override fun saveRememberMePref(id: String, result: (UiState<String>) -> Unit){
         database.collection(FireStoreCollection.USER).document(id)
             .get()
             .addOnCompleteListener {
