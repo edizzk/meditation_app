@@ -141,4 +141,10 @@ class AuthRepositoryImp @Inject constructor(
         }
     }
 
+    override fun logout(result: () -> Unit) {
+        auth.signOut()
+        appPreferences.edit().putString(USER_PREF, null).apply()
+        result.invoke()
+    }
+
 }

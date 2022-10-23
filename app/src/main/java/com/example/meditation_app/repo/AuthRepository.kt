@@ -9,4 +9,5 @@ interface AuthRepository {
     fun loginUser(email: String, password: String, rememberMe: Boolean, result: (UiState<String>) -> Unit)
     fun saveRememberMePref(id: String, result: (UiState<String>?) -> Unit)
     fun getRememberMePref(result: (User?) -> Unit)
+    fun logout(result: () -> Unit)
 }
