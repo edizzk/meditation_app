@@ -95,9 +95,11 @@ class RegisterFragment : Fragment() {
         viewModel.register.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Failure -> {
-                    toast(state.error)
+                    binding.errorCardView.visibility = View.VISIBLE
+                    binding.errorCardText.text = state.error
                 }
                 is UiState.Success -> {
+                    binding.errorCardView.visibility = View.GONE
                     toast(state.data)
                 }
                 else -> {}

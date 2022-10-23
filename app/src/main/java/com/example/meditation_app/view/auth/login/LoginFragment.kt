@@ -61,9 +61,11 @@ class LoginFragment : Fragment() {
                 is UiState.Loading -> {
                 }
                 is UiState.Failure -> {
-                    toast(state.error)
+                    binding.errorCardView.visibility = View.VISIBLE
+                    binding.errorCardText.text = state.error
                 }
                 is UiState.Success -> {
+                    binding.errorCardView.visibility = View.GONE
                     toast(state.data)
                 }
             }
