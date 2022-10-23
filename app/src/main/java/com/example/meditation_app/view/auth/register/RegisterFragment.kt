@@ -1,4 +1,4 @@
-package com.example.meditation_app.view.auth
+package com.example.meditation_app.view.auth.register
 
 import android.graphics.Typeface
 import android.os.Bundle
@@ -25,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class RegisterFragment : Fragment() {
 
     private lateinit var binding: FragmentRegisterBinding
-    private val viewModel: AuthViewModel by viewModels()
+    private val viewModel: RegisterViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -1,4 +1,4 @@
-package com.example.meditation_app.view.auth
+package com.example.meditation_app.view.auth.login
 
 import android.os.Bundle
 import android.util.Log
@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
-    private val viewModel: AuthViewModel by viewModels()
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

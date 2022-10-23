@@ -1,4 +1,4 @@
-package com.example.meditation_app.view.auth
+package com.example.meditation_app.view.auth.register
 
 import android.content.Context
 import androidx.fragment.app.FragmentActivity
@@ -17,7 +17,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthViewModel @Inject constructor(
+class RegisterViewModel @Inject constructor(
     private val repository: AuthRepository
 ): ViewModel(){
 
@@ -25,21 +25,10 @@ class AuthViewModel @Inject constructor(
     val register: LiveData<UiState<String>>
         get() = _register
 
-    private val _login = MutableLiveData<UiState<String>>()
-    val login: LiveData<UiState<String>>
-        get() = _login
-
     fun register(email: String, password: String, user: User) {
-       _register.value = UiState.Loading
+        _register.value = UiState.Loading
         repository.registerUser(email, password, user) { _register.value = it }
     }
-
-    fun login(email: String,password: String, rememberMe: Boolean) {
-        _login.value = UiState.Loading
-        repository.loginUser(email, password, rememberMe){ _login.value = it }
-    }
-
-    fun getRememberMePref(result: (User?) -> Unit) = repository.getRememberMePref(result)
 
     fun captcha(activity: FragmentActivity, result: (UiState<String>) -> Unit) {
         SafetyNet.getClient(activity).verifyWithRecaptcha(siteKey)

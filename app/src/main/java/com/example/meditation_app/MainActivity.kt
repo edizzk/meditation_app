@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.meditation_app.databinding.ActivityMainBinding
 import com.example.meditation_app.utils.UiString
-import com.example.meditation_app.view.auth.LoginFragment
-import com.example.meditation_app.view.auth.RegisterFragment
+import com.example.meditation_app.view.auth.login.LoginFragment
+import com.example.meditation_app.view.auth.register.RegisterFragment
 import com.example.meditation_app.view.auth.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
