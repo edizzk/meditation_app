@@ -32,6 +32,7 @@ class AuthRepositoryImp @Inject constructor(
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener{
                 if (it.isSuccessful) {
+                    user.id = it.result.user?.uid ?: ""
                     addUser(user) { state ->
                         when(state){
                             is UiState.Success -> {
@@ -69,8 +70,7 @@ class AuthRepositoryImp @Inject constructor(
     }
 
     override fun addUser(user: User, result: (UiState<String>) -> Unit) {
-        val document = database.collection(FireStoreCollection.USER).document()
-        user.id = document.id
+        val document = database.collection(FireStoreCollection.USER).document(user.id!!)
         document
             .set(user)
             .addOnSuccessListener {
