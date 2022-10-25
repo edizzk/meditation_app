@@ -1,7 +1,10 @@
 package com.example.meditation_app.di
 
+import android.content.SharedPreferences
+import com.example.meditation_app.data.remote.FirebaseDataSource
 import com.example.meditation_app.data.repository.AuthRepository
-import com.example.meditation_app.data.repository.AuthRepositoryImp
+import com.example.meditation_app.data.repository.AuthRepositoryImpl
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +18,9 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideAuthRepository(
-        authRepositoryImp: AuthRepositoryImp
-    ): AuthRepository = authRepositoryImp
+        dataSource: FirebaseDataSource,
+        prefs: SharedPreferences,
+        gson: Gson
+    ): AuthRepository = AuthRepositoryImpl(dataSource, prefs, gson)
 
 }
