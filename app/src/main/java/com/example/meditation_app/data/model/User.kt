@@ -1,4 +1,4 @@
-package com.example.meditation_app.model
+package com.example.meditation_app.data.model
 
 data class User(
     var id: String? = "",

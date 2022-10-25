@@ -12,8 +12,8 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.example.meditation_app.R
 import com.example.meditation_app.databinding.FragmentRegisterBinding
-import com.example.meditation_app.model.User
-import com.example.meditation_app.repo.AuthRepository
+import com.example.meditation_app.data.model.User
+import com.example.meditation_app.data.repository.AuthRepository
 import com.example.meditation_app.utils.*
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes

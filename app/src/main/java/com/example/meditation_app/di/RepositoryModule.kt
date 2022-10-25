@@ -1,7 +1,7 @@
 package com.example.meditation_app.di
 
-import com.example.meditation_app.repo.AuthRepository
-import com.example.meditation_app.repo.AuthRepositoryImp
+import com.example.meditation_app.data.repository.AuthRepository
+import com.example.meditation_app.data.repository.AuthRepositoryImp
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

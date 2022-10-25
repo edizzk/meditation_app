@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.meditation_app.R
 import com.example.meditation_app.databinding.FragmentLoginBinding
-import com.example.meditation_app.model.User
-import com.example.meditation_app.repo.AuthRepository
+import com.example.meditation_app.data.model.User
+import com.example.meditation_app.data.repository.AuthRepository
 import com.example.meditation_app.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

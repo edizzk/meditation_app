@@ -8,6 +8,7 @@ import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.StyleSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,7 @@ import androidx.fragment.app.viewModels
 import com.android.volley.toolbox.Volley
 import com.example.meditation_app.R
 import com.example.meditation_app.databinding.FragmentRegisterBinding
-import com.example.meditation_app.model.User
+import com.example.meditation_app.data.model.User
 import com.example.meditation_app.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -84,6 +85,7 @@ class RegisterFragment : Fragment() {
                         is UiState.Failure -> {
                             errorCardView.visibility = View.VISIBLE
                             errorCardText.text = it.error
+                            Log.d(TAG, "Failure:  ${it.error}")
                         }
                     }
                 }

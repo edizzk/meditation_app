@@ -1,6 +1,6 @@
-package com.example.meditation_app.repo
+package com.example.meditation_app.data.repository
 
-import com.example.meditation_app.model.User
+import com.example.meditation_app.data.model.User
 import com.example.meditation_app.utils.UiState
 
 interface AuthRepository {

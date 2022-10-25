@@ -1,8 +1,8 @@
-package com.example.meditation_app.repo
+package com.example.meditation_app.data.repository
 
 import android.content.SharedPreferences
 import android.util.Log
-import com.example.meditation_app.model.User
+import com.example.meditation_app.data.model.User
 import com.example.meditation_app.utils.FireStoreCollection
 import com.example.meditation_app.utils.SharedPrefConstants.USER_PREF
 import com.example.meditation_app.utils.UiState
@@ -21,8 +21,6 @@ class AuthRepositoryImp @Inject constructor(
     private val appPreferences: SharedPreferences,
     private val gson: Gson
 ) : AuthRepository {
-
-    private val tag = "AuthRepo: "
 
     override fun registerUser(
         email: String,
