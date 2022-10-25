@@ -1,6 +1,7 @@
 package com.example.meditation_app.view.auth.login
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -48,5 +49,10 @@ class LoginViewModel @Inject constructor(
             return
         }
         result.invoke(UiState.Success(""))
+        Log.d(TAG, "Validation Successfully")
+    }
+
+    companion object {
+        private const val TAG = "LoginViewModel: "
     }
 }

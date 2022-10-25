@@ -6,25 +6,20 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.android.volley.DefaultRetryPolicy
 import com.android.volley.RequestQueue
-import com.android.volley.Response
-import com.android.volley.toolbox.StringRequest
 import com.example.meditation_app.R
 import com.example.meditation_app.databinding.FragmentRegisterBinding
 import com.example.meditation_app.data.model.User
 import com.example.meditation_app.data.repository.AuthRepository
+import com.example.meditation_app.service.RecaptchaService
 import com.example.meditation_app.utils.*
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.CommonStatusCodes
-import com.google.android.gms.safetynet.SafetyNet
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.json.JSONObject
 import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val repository: AuthRepository
+    private val repository: AuthRepository,
+    private val recaptchaService: RecaptchaService
 ): ViewModel(){
 
     private val _register = MutableLiveData<UiState<String>>()
@@ -36,64 +31,7 @@ class RegisterViewModel @Inject constructor(
     }
 
     fun captcha(activity: FragmentActivity, queue: RequestQueue, result: (UiState<String>) -> Unit) {
-        SafetyNet.getClient(activity).verifyWithRecaptcha(siteKey)
-            .addOnSuccessListener(activity) { response ->
-                if (response.tokenResult?.isNotEmpty() == true) {
-                    handleCaptchaResult(response.tokenResult, queue) {
-                        when(it){
-                            is UiState.Success -> {
-                                result.invoke(UiState.Success(it.data))
-                            }
-                            is UiState.Failure -> {
-                                result.invoke(UiState.Failure(it.error))
-                            }
-                        }
-                    }
-                }
-            }
-            .addOnFailureListener(activity) { e ->
-                if (e is ApiException) {
-                    result.invoke(
-                        UiState.Failure(CommonStatusCodes.getStatusCodeString(e.statusCode))
-                    )
-                } else {
-                    result.invoke(
-                        UiState.Failure(e.message.toString())
-                    )
-                }
-            }
-    }
-    private fun handleCaptchaResult(responseToken: String?, queue: RequestQueue, result: (UiState<String>) -> Unit) {
-        val url = "https://www.google.com/recaptcha/api/siteverify"
-        val request: StringRequest = object : StringRequest(Method.POST, url,
-            Response.Listener { response ->
-                try {
-                    val jsonObject = JSONObject(response)
-                    if (jsonObject.getBoolean("success")) {
-                        result.invoke(UiState.Success("Success"))
-                    }
-                } catch (ex: Exception) {
-                    Log.d(TAG, "Error message: " + ex.message)
-                    result.invoke(UiState.Failure(ex.message))
-                }
-            },
-            Response.ErrorListener { error ->
-                Log.d(TAG, "Error message: " + error.message)
-                result.invoke(UiState.Failure(error.message))
-            }) {
-            override fun getParams(): MutableMap<String, String> {
-                val params: MutableMap<String, String> = HashMap()
-                params["secret"] = secretKey
-                params["response"] = responseToken!!
-                return params
-            }
-        }
-        request.retryPolicy = DefaultRetryPolicy(
-            50000,
-            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-        )
-        queue.add(request)
+        recaptchaService.captcha(activity, queue){result.invoke(it)}
     }
 
     fun validation(binding: FragmentRegisterBinding, context: Context, result: (UiState<String>) -> Unit) {
@@ -150,6 +88,7 @@ class RegisterViewModel @Inject constructor(
             }
         }
         result.invoke(UiState.Success(""))
+        Log.d(TAG, "Validation Successfully")
     }
 
     companion object {
