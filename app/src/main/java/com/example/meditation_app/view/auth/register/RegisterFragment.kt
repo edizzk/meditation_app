@@ -15,6 +15,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.android.volley.toolbox.Volley
 import com.example.meditation_app.R
 import com.example.meditation_app.databinding.FragmentRegisterBinding
 import com.example.meditation_app.model.User
@@ -37,6 +38,7 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val queue = Volley.newRequestQueue(requireContext())
         observer()
         binding.apply {
             conditionText1.setText(conditionText1.text.toString().makeItUnderlineAndBold(), TextView.BufferType.SPANNABLE)
@@ -46,7 +48,7 @@ class RegisterFragment : Fragment() {
                     return@setOnClickListener
                 }
                 reCaptcha.isChecked = false
-                viewModel.captcha(requireActivity()) {
+                viewModel.captcha(requireActivity(), queue) {
                     when(it){
                         is UiState.Success -> {
                             reCaptcha.isChecked = true

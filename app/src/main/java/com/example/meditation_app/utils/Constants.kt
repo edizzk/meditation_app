@@ -7,6 +7,7 @@ object FireStoreCollection{
 }
 
 const val siteKey = "6Lex75YiAAAAAFRDULTVsqOqXqEH2Ft2rqyfI3ie"
+const val secretKey = "6Lex75YiAAAAAC31-78ZHDjKrQi1TIeyeZ_tZhFm"
 
 object SharedPrefConstants {
     const val LOCAL_SHARED_PREF = "local_shared_pref"
