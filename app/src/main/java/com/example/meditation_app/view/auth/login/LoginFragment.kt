@@ -57,7 +57,7 @@ class LoginFragment : Fragment() {
             if (it != null){
                 //nav to home
             }else {
-                Log.d("TEST, ", "Failure:  $it")
+                Log.d(TAG, "Failure:  $it")
             }
         }
     }
@@ -78,6 +78,7 @@ class LoginFragment : Fragment() {
     }
 
     companion object {
+        private const val TAG = "LoginFragment: "
         fun create(): LoginFragment {
             return LoginFragment()
         }

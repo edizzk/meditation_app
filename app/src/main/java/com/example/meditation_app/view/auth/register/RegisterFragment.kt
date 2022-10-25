@@ -141,6 +141,7 @@ class RegisterFragment : Fragment() {
     }
 
     companion object {
+        private const val TAG = "RegisterFragment: "
         fun create(): RegisterFragment {
             return RegisterFragment()
         }

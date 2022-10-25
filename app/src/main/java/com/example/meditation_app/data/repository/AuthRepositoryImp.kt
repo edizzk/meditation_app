@@ -97,10 +97,10 @@ class AuthRepositoryImp @Inject constructor(
                             saveRememberMePref(task.result.user?.uid ?: ""){ state ->
                                 when(state) {
                                     is UiState.Success -> {
-                                        Log.d(tag, "Success: remember me pref is created")
+                                        Log.d(TAG, "Success: remember me pref is created")
                                     }
                                     is UiState.Failure -> {
-                                        Log.d(tag, "Failure: ${state.error}")
+                                        Log.d(TAG, "Failure: ${state.error}")
                                     }
                                 }
                             }
@@ -131,7 +131,7 @@ class AuthRepositoryImp @Inject constructor(
     override fun getRememberMePref(result: (User?) -> Unit) {
         val userStr = appPreferences.getString(USER_PREF,null)
         if (userStr == null){
-            Log.d(tag, "Failure getRememberMePref(): $userStr")
+            Log.d(TAG, "Failure getRememberMePref(): $userStr")
             result.invoke(null)
         }else{
             val user = gson.fromJson(userStr,User::class.java)
@@ -143,6 +143,10 @@ class AuthRepositoryImp @Inject constructor(
         auth.signOut()
         appPreferences.edit().putString(USER_PREF, null).apply()
         result.invoke()
+    }
+
+    companion object {
+        private const val TAG = "AuthRepositoryImp: "
     }
 
 }

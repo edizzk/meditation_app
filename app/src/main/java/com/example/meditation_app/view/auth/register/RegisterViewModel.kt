@@ -106,4 +106,8 @@ class RegisterViewModel @Inject constructor(
         }
         result.invoke(UiState.Success(""))
     }
+
+    companion object {
+        private const val TAG = "RegisterViewModel: "
+    }
 }
