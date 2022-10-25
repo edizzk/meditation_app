@@ -2,6 +2,7 @@ package com.example.meditation_app.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.meditation_app.service.RecaptchaService
 import com.example.meditation_app.utils.SharedPrefConstants.LOCAL_SHARED_PREF
 import com.google.gson.Gson
 import dagger.Module
@@ -24,4 +25,9 @@ object AppModule {
     @Provides
     @Singleton
     fun provideGson(): Gson = Gson()
+
+
+    @Provides
+    @Singleton
+    fun provideRecaptchaService(): RecaptchaService = RecaptchaService()
 }
