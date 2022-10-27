@@ -1,14 +1,14 @@
 package com.example.meditation_app.view.onboarding
 
 import android.content.Intent
-import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.meditation_app.R
+import com.example.meditation_app.base.BaseActivity
 import com.example.meditation_app.databinding.ActivityOnBoardingBinding
 import com.example.meditation_app.utils.onBoardingObjectList
 import com.example.meditation_app.view.auth.AuthActivity
@@ -16,30 +16,26 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class OnBoardingActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityOnBoardingBinding
+class OnBoardingActivity : BaseActivity<ActivityOnBoardingBinding, OnBoardingViewModel>() {
+
+    override fun getInflater(): (LayoutInflater) -> ActivityOnBoardingBinding = ActivityOnBoardingBinding::inflate
+
+    @Inject lateinit var onBoardingViewModel: OnBoardingViewModel
+    override fun getViewModel(): OnBoardingViewModel = onBoardingViewModel
 
     private lateinit var onBoardingAdapter: OnBoardingAdapter
-    @Inject lateinit var onBoardingViewModel: OnBoardingViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityOnBoardingBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
-
+    override fun setup() {
         initViewPager()
-
-        binding.cardOnBoarding.setOnClickListener {
-            onBoardingViewModel.saveOnBoardingStatePref(false)
+        baseBinding.cardOnBoarding.setOnClickListener {
+            baseViewModel.saveOnBoardingStatePref(false)
             Intent(applicationContext, AuthActivity::class.java).apply {startActivity(this)}
         }
-
     }
 
     private fun initViewPager() {
         onBoardingAdapter = OnBoardingAdapter(onBoardingObjectList)
-        binding.apply {
+        baseBinding.apply {
             onBoardingViewPager.adapter = onBoardingAdapter
             setupOnBoardingIndicators()
             setCurrentOnBoardingIndicator(0)
@@ -61,14 +57,14 @@ class OnBoardingActivity : AppCompatActivity() {
             val indicator = ImageView(applicationContext)
             indicator.setImageDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.on_boarding_indicator_inactive))
             indicator.layoutParams = layoutParams
-            binding.layoutOnBoardingIndicators.addView(indicator)
+            baseBinding.layoutOnBoardingIndicators.addView(indicator)
         }
     }
 
     private fun setCurrentOnBoardingIndicator(index: Int){
-        val childCount = binding.layoutOnBoardingIndicators.childCount
+        val childCount = baseBinding.layoutOnBoardingIndicators.childCount
         for (n in 0 until childCount){
-            val imageView = binding.layoutOnBoardingIndicators.getChildAt(n) as ImageView
+            val imageView = baseBinding.layoutOnBoardingIndicators.getChildAt(n) as ImageView
             if(n == index) imageView.setImageDrawable(
                 ContextCompat.getDrawable(applicationContext, R.drawable.on_boarding_indicator_active)
             ) else imageView.setImageDrawable(
@@ -76,5 +72,4 @@ class OnBoardingActivity : AppCompatActivity() {
             )
         }
     }
-
 }
