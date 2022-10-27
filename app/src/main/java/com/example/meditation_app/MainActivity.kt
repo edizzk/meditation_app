@@ -1,43 +1,25 @@
 package com.example.meditation_app
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.meditation_app.databinding.ActivityMainBinding
-import com.example.meditation_app.utils.UiString
-import com.example.meditation_app.view.auth.login.LoginFragment
-import com.example.meditation_app.view.auth.register.RegisterFragment
-import com.example.meditation_app.view.auth.ViewPagerAdapter
-import com.google.android.material.tabs.TabLayoutMediator
+import com.example.meditation_app.view.SplashViewModel
+import com.example.meditation_app.view.auth.AuthActivity
+import com.example.meditation_app.view.onboarding.OnBoardingActivity
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+
+    @Inject
+    lateinit var splashViewModel: SplashViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
-
-        createAdapter()
+        splashViewModel.getOnBoardingStatePref  { state ->
+            if (state) Intent(this, OnBoardingActivity::class.java).also {startActivity(it)}
+            else Intent(this, AuthActivity::class.java).also {startActivity(it)}
+        }
     }
-
-    private fun createAdapter() {
-        val fragmentList = listOf(
-            RegisterFragment.create(),
-            LoginFragment.create()
-        )
-        val fragmentTitleList = listOf(
-            UiString.StringResources(R.string.register).asString(applicationContext),
-            UiString.StringResources(R.string.login).asString(applicationContext)
-        )
-
-        val adapter = ViewPagerAdapter(this, fragmentList)
-        binding.viewPager2.adapter = adapter
-        TabLayoutMediator(binding.tabLayout, binding.viewPager2){
-                tab, pos -> tab.text = fragmentTitleList[pos]
-        }.attach()
-    }
-
 }
