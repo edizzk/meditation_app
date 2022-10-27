@@ -5,9 +5,9 @@ import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.android.volley.RequestQueue
 import com.example.meditation_app.R
+import com.example.meditation_app.base.BaseViewModel
 import com.example.meditation_app.databinding.FragmentRegisterBinding
 import com.example.meditation_app.data.model.User
 import com.example.meditation_app.data.repository.AuthRepository
@@ -20,7 +20,7 @@ import javax.inject.Inject
 class RegisterViewModel @Inject constructor(
     private val repository: AuthRepository,
     private val recaptchaService: RecaptchaService
-): ViewModel(){
+): BaseViewModel(){
 
     private val _register = MutableLiveData<UiState<String>>()
     val register: LiveData<UiState<String>>

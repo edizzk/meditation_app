@@ -4,8 +4,8 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.meditation_app.R
+import com.example.meditation_app.base.BaseViewModel
 import com.example.meditation_app.databinding.FragmentLoginBinding
 import com.example.meditation_app.data.model.User
 import com.example.meditation_app.data.repository.AuthRepository
@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val repository: AuthRepository
-): ViewModel(){
+): BaseViewModel(){
 
     private val _login = MutableLiveData<UiState<String>>()
     val login: LiveData<UiState<String>>

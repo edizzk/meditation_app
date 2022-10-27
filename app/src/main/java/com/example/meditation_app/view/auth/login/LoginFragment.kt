@@ -1,41 +1,31 @@
 package com.example.meditation_app.view.auth.login
 
-import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.example.meditation_app.base.BaseFragment
 import com.example.meditation_app.databinding.FragmentLoginBinding
 import com.example.meditation_app.utils.UiState
 import com.example.meditation_app.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginFragment : Fragment() {
+class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
 
-    private lateinit var binding: FragmentLoginBinding
-    private val viewModel: LoginViewModel by viewModels()
+    override fun getInflater(): (LayoutInflater) -> FragmentLoginBinding = FragmentLoginBinding::inflate
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentLoginBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    private val loginViewModel: LoginViewModel by viewModels()
+    override fun getViewModel(): LoginViewModel = loginViewModel
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        observer()
-        binding.apply {
+    override fun setup() {observer()
+        baseBinding.apply {
             loginButton.setOnClickListener{
-                viewModel.validation(binding, requireContext()){
+                baseViewModel.validation(baseBinding, requireContext()){
                     when(it) {
                         is UiState.Success -> {
                             errorCardView.visibility = View.GONE
-                            viewModel.login(
+                            baseViewModel.login(
                                 email = emailEditText.text.toString(),
                                 password = passwordEditText.text.toString(),
                                 rememberMe = rememberMeCheckbox.isChecked
@@ -53,7 +43,7 @@ class LoginFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        viewModel.getRememberMePref {
+        baseViewModel.getRememberMePref {
             if (it != null){
                 //nav to home
             }else {
@@ -63,14 +53,14 @@ class LoginFragment : Fragment() {
     }
 
     private fun observer(){
-        viewModel.login.observe(viewLifecycleOwner) { state ->
+        baseViewModel.login.observe(viewLifecycleOwner) { state ->
             when(state){
                 is UiState.Failure -> {
-                    binding.errorCardView.visibility = View.VISIBLE
-                    binding.errorCardText.text = state.error
+                    baseBinding.errorCardView.visibility = View.VISIBLE
+                    baseBinding.errorCardText.text = state.error
                 }
                 is UiState.Success -> {
-                    binding.errorCardView.visibility = View.GONE
+                    baseBinding.errorCardView.visibility = View.GONE
                     toast(state.data)
                 }
             }

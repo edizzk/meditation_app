@@ -1,7 +1,6 @@
 package com.example.meditation_app.view.auth.register
 
 import android.graphics.Typeface
-import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextPaint
@@ -11,37 +10,29 @@ import android.text.style.StyleSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat.getColor
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.android.volley.toolbox.Volley
 import com.example.meditation_app.R
+import com.example.meditation_app.base.BaseFragment
 import com.example.meditation_app.databinding.FragmentRegisterBinding
 import com.example.meditation_app.data.model.User
 import com.example.meditation_app.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegisterFragment : Fragment() {
+class RegisterFragment : BaseFragment<FragmentRegisterBinding, RegisterViewModel>() {
 
-    private lateinit var binding: FragmentRegisterBinding
-    private val viewModel: RegisterViewModel by viewModels()
+    override fun getInflater(): (LayoutInflater) -> FragmentRegisterBinding = FragmentRegisterBinding::inflate
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentRegisterBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    private val registerViewModel: RegisterViewModel by viewModels()
+    override fun getViewModel(): RegisterViewModel = registerViewModel
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun setup() {
         val queue = Volley.newRequestQueue(requireContext())
         observer()
-        binding.apply {
+        baseBinding.apply {
             conditionText1.setText(conditionText1.text.toString().makeItUnderlineAndBold(), TextView.BufferType.SPANNABLE)
             conditionText1.movementMethod = LinkMovementMethod.getInstance()
             reCaptcha.setOnClickListener{
@@ -49,7 +40,7 @@ class RegisterFragment : Fragment() {
                     return@setOnClickListener
                 }
                 reCaptcha.isChecked = false
-                viewModel.captcha(requireActivity(), queue) {
+                baseViewModel.captcha(requireActivity(), queue) {
                     when(it){
                         is UiState.Success -> {
                             reCaptcha.isChecked = true
@@ -72,11 +63,11 @@ class RegisterFragment : Fragment() {
                     errorCardText.text = UiString.StringResources(R.string.error_recaptcha).asString(requireContext())
                     return@setOnClickListener
                 }
-                viewModel.validation(binding, requireContext()){
+                baseViewModel.validation(baseBinding, requireContext()){
                     when(it) {
                         is UiState.Success -> {
                             errorCardView.visibility = View.GONE
-                            viewModel.register(
+                            baseViewModel.register(
                                 email = emailEditText.text.toString(),
                                 password = passwordEditText.text.toString(),
                                 user = getUserObj()
@@ -94,14 +85,14 @@ class RegisterFragment : Fragment() {
     }
 
     private fun observer() {
-        viewModel.register.observe(viewLifecycleOwner) { state ->
+        baseViewModel.register.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Failure -> {
-                    binding.errorCardView.visibility = View.VISIBLE
-                    binding.errorCardText.text = state.error
+                    baseBinding.errorCardView.visibility = View.VISIBLE
+                    baseBinding.errorCardText.text = state.error
                 }
                 is UiState.Success -> {
-                    binding.errorCardView.visibility = View.GONE
+                    baseBinding.errorCardView.visibility = View.GONE
                     toast(state.data)
                 }
             }
@@ -111,9 +102,9 @@ class RegisterFragment : Fragment() {
     private fun getUserObj(): User {
         return User(
             id = "",
-            first_name = binding.firstNameEditText.text.toString(),
-            last_name = binding.lastNameEditText.text.toString(),
-            email = binding.emailEditText.text.toString(),
+            first_name = baseBinding.firstNameEditText.text.toString(),
+            last_name = baseBinding.lastNameEditText.text.toString(),
+            email = baseBinding.emailEditText.text.toString(),
         )
     }
 
