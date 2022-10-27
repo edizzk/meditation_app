@@ -4,6 +4,8 @@ import android.content.SharedPreferences
 import com.example.meditation_app.data.remote.FirebaseDataSource
 import com.example.meditation_app.data.repository.AuthRepository
 import com.example.meditation_app.data.repository.AuthRepositoryImpl
+import com.example.meditation_app.data.repository.DataStoreRepository
+import com.example.meditation_app.data.repository.DataStoreRepositoryImpl
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -22,5 +24,11 @@ class RepositoryModule {
         prefs: SharedPreferences,
         gson: Gson
     ): AuthRepository = AuthRepositoryImpl(dataSource, prefs, gson)
+
+    @Provides
+    @Singleton
+    fun provideDataStoreRepository(
+        prefs: SharedPreferences
+    ): DataStoreRepository = DataStoreRepositoryImpl(prefs)
 
 }
