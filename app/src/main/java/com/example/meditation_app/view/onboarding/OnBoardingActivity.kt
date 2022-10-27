@@ -34,6 +34,39 @@ class OnBoardingActivity : AppCompatActivity() {
         onBoardingAdapter = OnBoardingAdapter(onBoardingObjectList)
         binding.apply {
             onBoardingViewPager.adapter = onBoardingAdapter
+            setupOnBoardingIndicators()
+            setCurrentOnBoardingIndicator(0)
+            onBoardingViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    setCurrentOnBoardingIndicator(position)
+                }
+            })
+        }
+    }
+
+    private fun setupOnBoardingIndicators() {
+        val layoutParams: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        )
+        layoutParams.setMargins(8, 0, 8, 0)
+        for (n in onBoardingObjectList.indices){
+            val indicator = ImageView(applicationContext)
+            indicator.setImageDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.on_boarding_indicator_inactive))
+            indicator.layoutParams = layoutParams
+            binding.layoutOnBoardingIndicators.addView(indicator)
+        }
+    }
+
+    private fun setCurrentOnBoardingIndicator(index: Int){
+        val childCount = binding.layoutOnBoardingIndicators.childCount
+        for (n in 0 until childCount){
+            val imageView = binding.layoutOnBoardingIndicators.getChildAt(n) as ImageView
+            if(n == index) imageView.setImageDrawable(
+                ContextCompat.getDrawable(applicationContext, R.drawable.on_boarding_indicator_active)
+            ) else imageView.setImageDrawable(
+                ContextCompat.getDrawable(applicationContext, R.drawable.on_boarding_indicator_inactive)
+            )
         }
     }
 
