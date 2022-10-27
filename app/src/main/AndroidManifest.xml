@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Meditation_app"
         tools:targetApi="32">
         <activity
+            android:name=".view.auth.AuthActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
