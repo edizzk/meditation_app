@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         splashViewModel.getOnBoardingStatePref  { state ->
             if (state) Intent(this, OnBoardingActivity::class.java).also {startActivity(it)}
             else Intent(this, AuthActivity::class.java).also {startActivity(it)}
+            finish()
         }
     }
 }
