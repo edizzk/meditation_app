@@ -27,7 +27,24 @@
         İleti Bilgilendirme metnini okuduğunuzu ve kabul ettiğinizi onaylıyorsunuz.
     </string>
     <string name="information">"Bilgilendirme"</string>
-    <string name="not_availabe">"Bu özellik şu an için aktif değil!"</string>
+    <string name="not_available">"Bu özellik şu an için aktif değil!"</string>
     <string name="approve_terms_and_conditions">"Lütfen Sözleşmeleri ve Şartları Onaylayın."</string>
     <string name="error_recaptcha">"Lütfen Robot Olmadığınızı Doğrulayın."</string>
+    <string name="on_boarding_first_title">"Congratulations!"</string>
+    <string name="on_boarding_first_desc">"You are starting a diet program with no calorie limitation and "
+        "meal details to keep in mind."
+    </string>
+    <string name="on_boarding_second_title">"Natural"</string>
+    <string name="on_boarding_second_desc">"The method we will implement is one of the most effective methods since "
+        "the existence of humanity."
+    </string>
+    <string name="on_boarding_third_title">"Effective and Healthy"</string>
+    <string name="on_boarding_third_desc">"You will feel your body is burning fat with ketosis mode and you will not lose "
+        "your body resistance."
+    </string>
+    <string name="on_boarding_four_title">"Applicable At All Levels"</string>
+    <string name="on_boarding_four_desc">"Our plan has been tried by millions and successful results have been "
+        "achieved."
+    </string>
+    <string name="start_now">"Start Now</string>
 </resources>

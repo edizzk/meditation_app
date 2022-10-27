@@ -21,7 +21,7 @@ fun String.hasUpperCase() = any(Char::isUpperCase)
 fun notAvailableAlert(context: Context){
     val builder = AlertDialog.Builder(context)
     builder.setTitle(UiString.StringResources(R.string.information).asString(context))
-    builder.setMessage(UiString.StringResources(R.string.not_availabe).asString(context))
+    builder.setMessage(UiString.StringResources(R.string.not_available).asString(context))
     builder.setPositiveButton(android.R.string.ok) { _, _ ->
         Toast.makeText(context, android.R.string.ok, Toast.LENGTH_SHORT).show()
     }
