@@ -1,5 +1,6 @@
 package com.example.meditation_app.view.onboarding
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -10,6 +11,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.meditation_app.R
 import com.example.meditation_app.databinding.ActivityOnBoardingBinding
 import com.example.meditation_app.utils.onBoardingObjectList
+import com.example.meditation_app.view.auth.AuthActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -27,6 +29,11 @@ class OnBoardingActivity : AppCompatActivity() {
         setContentView(view)
 
         initViewPager()
+
+        binding.cardOnBoarding.setOnClickListener {
+            onBoardingViewModel.saveOnBoardingStatePref(false)
+            Intent(applicationContext, AuthActivity::class.java).apply {startActivity(this)}
+        }
 
     }
 
