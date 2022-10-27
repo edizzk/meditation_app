@@ -33,3 +33,10 @@ sealed class OnBoardingScreens (
         description = R.string.on_boarding_four_desc
     )
 }
+
+val onBoardingObjectList = listOf(
+    OnBoardingScreens.First,
+    OnBoardingScreens.Second,
+    OnBoardingScreens.Third,
+    OnBoardingScreens.Four
+)
