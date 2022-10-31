@@ -1,5 +1,7 @@
 package com.example.meditation_app.data.remote
 
+import com.example.meditation_app.data.model.Meditations
+import com.example.meditation_app.data.model.Stories
 import com.example.meditation_app.data.model.User
 import com.example.meditation_app.utils.FireStoreCollection
 import com.example.meditation_app.utils.UiState
@@ -71,19 +73,47 @@ class FirebaseDataSourceImpl @Inject constructor(
 
     override fun getUser(userId: String, result: (User?, UiState<String>) -> Unit) {
         database.collection(FireStoreCollection.USER).document(userId)
-        .get()
-        .addOnCompleteListener {
-            if (it.isSuccessful){
-                val user = it.result.toObject<User>()
-                result.invoke(user, UiState.Success("Remember me successfully"))
-            }else{
-                result.invoke(null, UiState.Failure(it.exception.toString()))
+            .get()
+            .addOnCompleteListener {
+                if (it.isSuccessful){
+                    val user = it.result.toObject<User>()
+                    result.invoke(user, UiState.Success("Remember me successfully"))
+                }else{
+                    result.invoke(null, UiState.Failure(it.exception.toString()))
+                }
             }
-        }
-        .addOnFailureListener{result.invoke(null, UiState.Failure(it.message))}
+            .addOnFailureListener{result.invoke(null, UiState.Failure(it.message))}
     }
 
     override fun logout() {
         auth.signOut()
+    }
+
+    override fun getAllMeditations(result: (UiState<List<Meditations>>) -> Unit) {
+        database.collection(FireStoreCollection.MED)
+            .get()
+            .addOnSuccessListener{
+                val medList = arrayListOf<Meditations>()
+                for (doc in it) {
+                    val med = doc.toObject(Meditations::class.java)
+                    medList.add(med)
+                }
+                result.invoke(UiState.Success(medList))
+            }
+            .addOnFailureListener { result.invoke(UiState.Failure(it.localizedMessage)) }
+    }
+
+    override fun getAllStories(result: (UiState<List<Stories>>) -> Unit) {
+        database.collection(FireStoreCollection.STORY)
+            .get()
+            .addOnSuccessListener{
+                val storyList = arrayListOf<Stories>()
+                for (doc in it) {
+                    val story = doc.toObject(Stories::class.java)
+                    storyList.add(story)
+                }
+                result.invoke(UiState.Success(storyList))
+            }
+            .addOnFailureListener { result.invoke(UiState.Failure(it.localizedMessage)) }
     }
 }
