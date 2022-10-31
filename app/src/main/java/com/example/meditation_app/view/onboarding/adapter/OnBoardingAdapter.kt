@@ -1,4 +1,4 @@
-package com.example.meditation_app.view.onboarding
+package com.example.meditation_app.view.onboarding.adapter
 
 import android.view.LayoutInflater
 import android.view.View

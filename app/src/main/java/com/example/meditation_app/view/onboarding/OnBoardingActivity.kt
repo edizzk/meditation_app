@@ -12,6 +12,7 @@ import com.example.meditation_app.base.BaseActivity
 import com.example.meditation_app.databinding.ActivityOnBoardingBinding
 import com.example.meditation_app.utils.onBoardingObjectList
 import com.example.meditation_app.view.auth.AuthActivity
+import com.example.meditation_app.view.onboarding.adapter.OnBoardingAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
