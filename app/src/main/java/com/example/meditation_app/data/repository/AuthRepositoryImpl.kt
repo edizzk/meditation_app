@@ -51,17 +51,6 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getRememberMePref(result: (User?) -> Unit) {
-        val userStr = appPreferences.getString(USER_PREF,null)
-        if (userStr == null){
-            Log.d(TAG, "Failure getRememberMePref(): $userStr")
-            result.invoke(null)
-        }else{
-            val user = gson.fromJson(userStr,User::class.java)
-            result.invoke(user)
-        }
-    }
-
     override fun logout() {
         appPreferences.edit().putString(USER_PREF, null).apply()
     }

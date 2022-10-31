@@ -25,8 +25,9 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideDataStoreRepository(
-        prefs: SharedPreferences
-    ): DataStoreRepository = DataStoreRepositoryImpl(prefs)
+        prefs: SharedPreferences,
+        gson: Gson
+    ): DataStoreRepository = DataStoreRepositoryImpl(prefs, gson)
 
     @Provides
     @Singleton
