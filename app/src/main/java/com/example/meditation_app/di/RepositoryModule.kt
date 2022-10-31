@@ -2,10 +2,7 @@ package com.example.meditation_app.di
 
 import android.content.SharedPreferences
 import com.example.meditation_app.data.remote.FirebaseDataSource
-import com.example.meditation_app.data.repository.AuthRepository
-import com.example.meditation_app.data.repository.AuthRepositoryImpl
-import com.example.meditation_app.data.repository.DataStoreRepository
-import com.example.meditation_app.data.repository.DataStoreRepositoryImpl
+import com.example.meditation_app.data.repository.*
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -30,5 +27,18 @@ class RepositoryModule {
     fun provideDataStoreRepository(
         prefs: SharedPreferences
     ): DataStoreRepository = DataStoreRepositoryImpl(prefs)
+
+    @Provides
+    @Singleton
+    fun provideMeditationsRepository(
+        dataSource: FirebaseDataSource
+    ): MeditationsRepository = MeditationsRepositoryImpl(dataSource)
+
+    @Provides
+    @Singleton
+    fun provideStoriesRepository(
+        dataSource: FirebaseDataSource
+    ): StoriesRepository = StoriesRepositoryImpl(dataSource)
+
 
 }
