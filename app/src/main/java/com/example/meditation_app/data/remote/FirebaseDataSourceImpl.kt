@@ -71,18 +71,22 @@ class FirebaseDataSourceImpl @Inject constructor(
             .addOnFailureListener{result.invoke(UiState.Failure(it.localizedMessage))}
     }
 
-    override fun getUser(userId: String, result: (User?, UiState<String>) -> Unit) {
-        database.collection(FireStoreCollection.USER).document(userId)
-            .get()
-            .addOnCompleteListener {
-                if (it.isSuccessful){
-                    val user = it.result.toObject<User>()
-                    result.invoke(user, UiState.Success("Remember me successfully"))
-                }else{
-                    result.invoke(null, UiState.Failure(it.exception.toString()))
+    override fun getCurrentUser(result: (UiState<User?>) -> Unit) {
+        val userId = auth.currentUser?.uid
+        if (userId != null)
+            database.collection(FireStoreCollection.USER).document(userId)
+                .get()
+                .addOnCompleteListener {
+                    if (it.isSuccessful){
+                        val user = it.result.toObject<User>()
+                        result.invoke(UiState.Success(user))
+                    }else{
+                        result.invoke(UiState.Failure(it.exception.toString()))
+                    }
                 }
-            }
-            .addOnFailureListener{result.invoke(null, UiState.Failure(it.message))}
+                .addOnFailureListener{result.invoke(UiState.Failure(it.message))}
+        else result.invoke(UiState.Failure("userId is null"))
+
     }
 
     override fun logout() {

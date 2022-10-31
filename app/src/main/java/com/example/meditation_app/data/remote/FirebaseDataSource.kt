@@ -9,7 +9,7 @@ interface FirebaseDataSource {
     fun registerUser(email: String, password: String, user: User, result: (UiState<String>) -> Unit)
     fun loginUser(email: String, password: String, result: (UiState<String>) -> Unit)
     fun addUser(user: User, result: (UiState<String>) -> Unit)
-    fun getUser(userId: String, result: (User?, UiState<String>) -> Unit)
+    fun getCurrentUser(result: (UiState<User?>) -> Unit)
     fun logout()
 
     fun getAllMeditations(result: (UiState<List<Meditations>>) -> Unit)
