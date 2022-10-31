@@ -1,6 +1,7 @@
 package com.example.meditation_app.view
 
 import com.example.meditation_app.base.BaseViewModel
+import com.example.meditation_app.data.model.User
 import com.example.meditation_app.data.repository.DataStoreRepository
 import javax.inject.Inject
 
@@ -9,5 +10,7 @@ class SplashViewModel @Inject constructor(
 ): BaseViewModel() {
 
     fun getOnBoardingStatePref(result: (Boolean) -> Unit) = repository.getOnBoardingStatePref {result.invoke(it)}
+
+    fun getRememberMePref(result: (User?) -> Unit) = repository.getRememberMePref(result)
 
 }
