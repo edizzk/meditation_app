@@ -14,6 +14,8 @@
         <entry key="..\:/android_projects/meditation_app/app/src/main/res/layout/fragment_login.xml" value="0.22826086956521738" />
         <entry key="..\:/android_projects/meditation_app/app/src/main/res/layout/fragment_register.xml" value="0.22826086956521738" />
         <entry key="..\:/android_projects/meditation_app/app/src/main/res/layout/item_container_on_boarding.xml" value="0.25" />
+        <entry key="..\:/android_projects/meditation_app/app/src/main/res/layout/item_meditations.xml" value="0.25416666666666665" />
+        <entry key="..\:/android_projects/meditation_app/app/src/main/res/layout/item_stories.xml" value="0.1" />
       </map>
     </option>
   </component>
