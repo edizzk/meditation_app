@@ -1,5 +1,6 @@
 package com.example.meditation_app.view.auth.register
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.text.SpannableString
 import android.text.Spanned
@@ -19,6 +20,7 @@ import com.example.meditation_app.base.BaseFragment
 import com.example.meditation_app.databinding.FragmentRegisterBinding
 import com.example.meditation_app.data.model.User
 import com.example.meditation_app.utils.*
+import com.example.meditation_app.view.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -93,6 +95,8 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding, RegisterViewModel
                 }
                 is UiState.Success -> {
                     baseBinding.errorCardView.visibility = View.GONE
+                    Intent(requireContext(), HomeActivity::class.java).also { startActivity(it) }
+                    requireActivity().finish()
                     toast(state.data)
                 }
             }

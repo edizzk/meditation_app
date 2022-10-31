@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import com.example.meditation_app.R
 import com.example.meditation_app.base.BaseViewModel
 import com.example.meditation_app.databinding.FragmentLoginBinding
-import com.example.meditation_app.data.model.User
 import com.example.meditation_app.data.repository.AuthRepository
 import com.example.meditation_app.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,8 +24,6 @@ class LoginViewModel @Inject constructor(
     fun login(email: String,password: String, rememberMe: Boolean) {
         repository.loginUser(email, password, rememberMe){ _login.value = it }
     }
-
-    fun getRememberMePref(result: (User?) -> Unit) = repository.getRememberMePref(result)
 
     fun validation(binding: FragmentLoginBinding, context: Context, result: (UiState<String>) -> Unit) {
         if (binding.emailEditText.text.isNullOrEmpty()){
