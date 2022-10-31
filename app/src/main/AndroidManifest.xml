@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Meditation_app"
         tools:targetApi="32">
         <activity
+            android:name=".view.details.DetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.home.HomeActivity"
             android:exported="false" />
         <activity
