@@ -5,6 +5,7 @@ import com.example.meditation_app.R
 import com.example.meditation_app.base.BaseActivity
 import com.example.meditation_app.databinding.ActivityAuthBinding
 import com.example.meditation_app.utils.UiString
+import com.example.meditation_app.view.auth.adapter.ViewPagerAdapter
 import com.example.meditation_app.view.auth.login.LoginFragment
 import com.example.meditation_app.view.auth.register.RegisterFragment
 import com.google.android.material.tabs.TabLayoutMediator
