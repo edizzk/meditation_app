@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.meditation_app.base.BaseViewModel
 import com.example.meditation_app.data.model.Meditations
 import com.example.meditation_app.data.model.Stories
+import com.example.meditation_app.data.model.User
+import com.example.meditation_app.data.repository.AuthRepository
 import com.example.meditation_app.data.repository.MeditationsRepository
 import com.example.meditation_app.data.repository.StoriesRepository
 import com.example.meditation_app.utils.UiState
@@ -17,8 +19,13 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val medRepository: MeditationsRepository,
-    private val storyRepository: StoriesRepository
+    private val storyRepository: StoriesRepository,
+    private val authRepository: AuthRepository
 ): BaseViewModel() {
+
+    private val _currentUser = MutableLiveData<User?>()
+    val currentUser: LiveData<User?>
+        get() = _currentUser
 
     private val _responseMed = MutableLiveData<List<Meditations>?>()
     val responseMed: LiveData<List<Meditations>?>
@@ -29,8 +36,18 @@ class HomeViewModel @Inject constructor(
         get() = _responseStory
 
     init {
+        getCurrentUser()
         getAllMeditations()
         getAllStories()
+    }
+
+    private fun getCurrentUser() = viewModelScope.launch {
+        authRepository.getCurrentUser { state ->
+            when(state) {
+                is UiState.Success -> _currentUser.postValue(state.data)
+                is UiState.Failure -> Log.d(TAG, "getCurrentUser Failure: ${state.error}")
+            }
+        }
     }
 
     private fun getAllMeditations() = viewModelScope.launch {

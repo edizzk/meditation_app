@@ -109,6 +109,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding, RegisterViewModel
             first_name = baseBinding.firstNameEditText.text.toString(),
             last_name = baseBinding.lastNameEditText.text.toString(),
             email = baseBinding.emailEditText.text.toString(),
+            vip = false
         )
     }
 

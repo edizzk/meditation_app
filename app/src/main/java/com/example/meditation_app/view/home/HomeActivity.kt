@@ -1,6 +1,7 @@
 package com.example.meditation_app.view.home
 
 import android.view.LayoutInflater
+import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,6 +37,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>() {
             setHasFixedSize(true)
         }
 
+        baseViewModel.currentUser.observe(this) { user ->
+            if (user != null) baseBinding.cardView.visibility = if (user.vip == true) View.GONE else View.VISIBLE
+        }
         baseViewModel.responseMed.observe(this) { if (it != null) medAdapter.medList = it }
         baseViewModel.responseStory.observe(this) { if (it != null) storyAdapter.storyList = it }
 
