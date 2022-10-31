@@ -46,5 +46,7 @@
     <string name="on_boarding_four_desc">"Our plan has been tried by millions and successful results have been "
         "achieved."
     </string>
-    <string name="start_now">"Start Now</string>
+    <string name="start_now">"Start Now"</string>
+    <string name="meditations_title">"Meditations"</string>
+    <string name="stories_title">"Stories"</string>
 </resources>
