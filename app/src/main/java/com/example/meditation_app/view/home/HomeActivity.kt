@@ -35,5 +35,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>() {
             layoutManager = GridLayoutManager(this@HomeActivity, 2, GridLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
         }
+
+        baseViewModel.responseMed.observe(this) { if (it != null) medAdapter.medList = it }
+        baseViewModel.responseStory.observe(this) { if (it != null) storyAdapter.storyList = it }
+
     }
 }
