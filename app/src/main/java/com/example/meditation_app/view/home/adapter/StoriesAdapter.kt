@@ -10,8 +10,16 @@ import com.example.meditation_app.databinding.ItemStoriesBinding
 
 class StoriesAdapter: RecyclerView.Adapter<StoriesAdapter.MyViewHolder>() {
 
-    inner class MyViewHolder(val binding: ItemStoriesBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    private lateinit var mListener: OnAdapterItemClickListener
+
+    fun setOnItemClickListener(listener: OnAdapterItemClickListener) = listener.also { mListener = it }
+
+    inner class MyViewHolder(val binding: ItemStoriesBinding, listener: OnAdapterItemClickListener) :
+        RecyclerView.ViewHolder(binding.root) {
+            init {
+                itemView.setOnClickListener { listener.onItemClick(adapterPosition) }
+            }
+        }
 
     private val diffCallBack = object : DiffUtil.ItemCallback<Stories>() {
         override fun areItemsTheSame(oldItem: Stories, newItem: Stories): Boolean = oldItem.id == newItem.id
@@ -24,7 +32,7 @@ class StoriesAdapter: RecyclerView.Adapter<StoriesAdapter.MyViewHolder>() {
         set(value) = differ.submitList(value)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder =
-        MyViewHolder(ItemStoriesBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        MyViewHolder(ItemStoriesBinding.inflate(LayoutInflater.from(parent.context), parent, false), mListener)
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentStory = storyList[position]

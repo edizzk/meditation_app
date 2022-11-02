@@ -28,13 +28,17 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>() {
 
         baseBinding.medRecycler.apply {
             adapter = medAdapter
-            layoutManager = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
-            setHasFixedSize(true)
+            medAdapter.setOnItemClickListener(object : OnAdapterItemClickListener{
+                override fun onItemClick(position: Int) {
+                }
+            })
         }
         baseBinding.storyRecycler.apply {
             adapter = storyAdapter
-            layoutManager = GridLayoutManager(this@HomeActivity, 2, GridLayoutManager.VERTICAL, false)
-            setHasFixedSize(true)
+            storyAdapter.setOnItemClickListener(object : OnAdapterItemClickListener{
+                override fun onItemClick(position: Int) {
+                }
+            })
         }
 
         baseViewModel.currentUser.observe(this) { user ->
