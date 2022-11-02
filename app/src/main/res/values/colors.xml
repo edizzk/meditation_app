@@ -17,4 +17,6 @@
     <color name="indicator_inactive">#FF808080</color>
     <color name="on_boarding_button_background">#FF11A199</color>
     <color name="banner_background">#FF4036A3</color>
+    <color name="voice_player_background">#80F6F5FF</color>
+    <color name="date_card_background">#26FFFFFF</color>
 </resources>
