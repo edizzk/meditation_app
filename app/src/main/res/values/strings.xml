@@ -48,6 +48,8 @@
     </string>
     <string name="start_now">"Start Now"</string>
     <string name="meditations_title">"Meditations"</string>
+    <string name="meditation_detail_title">"Meditation Detail"</string>
     <string name="stories_title">"Stories"</string>
+    <string name="story_detail_title">"Story Detail"</string>
     <string name="banner_text">"Look. Pretty, isn’t it? Perfectly balanced. As all things should be."</string>
 </resources>

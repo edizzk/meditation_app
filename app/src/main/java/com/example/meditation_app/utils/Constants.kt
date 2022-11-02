@@ -14,3 +14,11 @@ object SharedPrefConstants {
     const val USER_PREF = "USER_PREF"
     const val ON_BOARDING_STATE = "on_boarding_state"
 }
+
+object IntentConstants {
+    const val OBJECT_TYPE = "object_type"
+    const val MED_OBJECT = "med_object"
+    const val STORY_OBJECT = "story_object"
+}
+
+const val mediaPlayerUrl = "https://d2r0ihkco3hemf.cloudfront.net/bgxupraW2spUpr_y2.mp3"
