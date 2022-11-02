@@ -6,8 +6,15 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Stories (
     val id: Int? = 0,
-    val name: String? = "",
-    val subtitle: String? = "",
-    val desc: String? = "",
-    val image: String? = ""
-): Parcelable
+    private val name: String? = "",
+    private val subtitle: String? = "",
+    private val desc: String? = "",
+    private val image: String? = ""
+): Parcelable, DetailViewObject {
+
+    override fun getName() = name
+    override fun getSubTitle() = subtitle
+    override fun getDesc() = desc
+    override fun getImage() = image
+
+}
