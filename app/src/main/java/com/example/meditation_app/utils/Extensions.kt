@@ -5,6 +5,8 @@ import android.content.Context
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.meditation_app.R
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 fun Fragment.toast(msg: String?){
@@ -26,4 +28,10 @@ fun notAvailableAlert(context: Context){
         Toast.makeText(context, android.R.string.ok, Toast.LENGTH_SHORT).show()
     }
     builder.show()
+}
+
+fun dateFormatter(): String {
+    val currentTime: Date = Calendar.getInstance().time
+    val simpleDateFormat = SimpleDateFormat("MM/dd/yyyy, EE", Locale.US)
+    return simpleDateFormat.format(currentTime).toString()
 }

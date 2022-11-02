@@ -40,6 +40,7 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding, DetailsViewModel>()
                 titleText.text = detailsObject?.name ?: ""
                 descText.text = detailsObject?.desc ?: ""
             }
+            dateTimeText.text = dateFormatter()
         }
 
 
