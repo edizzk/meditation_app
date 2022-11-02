@@ -22,25 +22,19 @@ class RecaptchaService {
                 if (response.tokenResult?.isNotEmpty() == true) {
                     handleCaptchaResult(response.tokenResult, queue) {
                         when(it){
-                            is UiState.Success -> {
-                                result.invoke(UiState.Success(it.data))
-                            }
-                            is UiState.Failure -> {
-                                result.invoke(UiState.Failure(it.error))
-                            }
+                            is UiState.Success -> result.invoke(UiState.Success(it.data))
+                            is UiState.Failure -> result.invoke(UiState.Failure(it.error))
                         }
                     }
                 }
             }
             .addOnFailureListener(activity) { e ->
                 if (e is ApiException) {
-                    result.invoke(
-                        UiState.Failure(CommonStatusCodes.getStatusCodeString(e.statusCode))
-                    )
+                    result.invoke(UiState.Failure(CommonStatusCodes.getStatusCodeString(e.statusCode)))
+                    Log.d(TAG, "Failure: " + CommonStatusCodes.getStatusCodeString(e.statusCode))
                 } else {
-                    result.invoke(
-                        UiState.Failure(e.message.toString())
-                    )
+                    result.invoke(UiState.Failure(e.message.toString()))
+                    Log.d(TAG, "Failure: " + e.message.toString())
                 }
             }
     }
@@ -79,7 +73,7 @@ class RecaptchaService {
     }
 
     companion object {
-        private const val TAG = "Recaptcha Service: "
+        private const val TAG = "RecaptchaService: "
     }
 
 }

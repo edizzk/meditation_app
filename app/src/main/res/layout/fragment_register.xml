@@ -10,32 +10,27 @@
         android:id="@+id/errorCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        app:cardBackgroundColor="@color/red_light"
-        app:strokeWidth="1dp"
-        app:strokeColor="@color/grey"
+        android:layout_marginTop="24dp"
         android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent">
+        app:cardBackgroundColor="@color/red_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/grey"
+        app:strokeWidth="1dp">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/errorCardText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/errorCardText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/red"
-                android:padding="12dp"
-                android:gravity="center_vertical"
-                android:drawablePadding="8dp"
-                android:textSize="16sp"
-                android:text=""
-                app:drawableLeftCompat="@drawable/ic_baseline_error_outline_30" />
-        </LinearLayout>
+            android:drawablePadding="12dp"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="18dp"
+            android:text=""
+            android:textColor="@color/red"
+            android:textSize="14sp"
+            app:drawableLeftCompat="@drawable/ic_baseline_error_outline_30" />
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -44,9 +39,8 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="4dp"
         app:layout_constraintEnd_toStartOf="@+id/lastNameTextField"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/errorCardView">
@@ -64,9 +58,8 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/firstNameTextField"
         app:layout_constraintTop_toBottomOf="@+id/errorCardView">
@@ -83,9 +76,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lastNameTextField">
@@ -102,9 +93,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailTextField">
@@ -119,103 +108,119 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/reCaptchaCardView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="83dp"
+        android:layout_marginHorizontal="0.25dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordTextField"
         app:strokeColor="@color/grey"
-        app:strokeWidth="0.6dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp">
+        app:strokeWidth="0.5dp">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
+
             <CheckBox
                 android:id="@+id/reCaptcha"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/grey" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:buttonTint="@color/grey"
+                android:text="@string/recaptcha_text"
                 android:textSize="18sp"
-                android:text="@string/recaptcha_text"/>
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
             <ImageView
-                android:padding="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="12dp"
+                android:padding="8dp"
                 android:src="@drawable/recaptcha"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription" />
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </com.google.android.material.card.MaterialCardView>
 
-    <ScrollView
-        android:id="@+id/scrollView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/registerButton"
+        android:layout_marginTop="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reCaptchaCardView">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/registerButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+
                 <CheckBox
                     android:id="@+id/conditionCheckBox1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/red"/>
+                    android:buttonTint="@color/red"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/conditionText1" />
+
                 <TextView
                     android:id="@+id/conditionText1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:textSize="16sp"
-                    android:text="@string/conditions_1"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                    android:text="@string/conditions_1"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/conditionCheckBox1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <CheckBox
                     android:id="@+id/conditionCheckBox2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/red"/>
+                    android:buttonTint="@color/red"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/conditionText2" />
+
                 <TextView
                     android:id="@+id/conditionText2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:textSize="16sp"
-                    android:text="@string/conditions_2"/>
-            </LinearLayout>
-        </LinearLayout>
-</ScrollView>
+                    android:layout_marginTop="12dp"
+                    android:text="@string/conditions_2"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/conditionCheckBox2"
+                    app:layout_constraintTop_toBottomOf="@id/conditionText1" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
-        android:id="@+id/registerButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="@string/register"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView" />
+        </ScrollView>
+
+        <Button
+            android:id="@+id/registerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/register"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/scrollView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
