@@ -1,6 +1,7 @@
 package com.example.meditation_app.view.auth.register
 
-import android.content.Context
+import android.app.Application
+import android.text.Editable
 import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
@@ -8,7 +9,6 @@ import androidx.lifecycle.MutableLiveData
 import com.android.volley.RequestQueue
 import com.example.meditation_app.R
 import com.example.meditation_app.base.BaseViewModel
-import com.example.meditation_app.databinding.FragmentRegisterBinding
 import com.example.meditation_app.data.model.User
 import com.example.meditation_app.data.repository.AuthRepository
 import com.example.meditation_app.service.RecaptchaService
@@ -19,7 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val repository: AuthRepository,
-    private val recaptchaService: RecaptchaService
+    private val recaptchaService: RecaptchaService,
+    private val application: Application
 ): BaseViewModel(){
 
     private val _register = MutableLiveData<UiState<String>>()
@@ -34,53 +35,53 @@ class RegisterViewModel @Inject constructor(
         recaptchaService.captcha(activity, queue){result.invoke(it)}
     }
 
-    fun validation(binding: FragmentRegisterBinding, context: Context, result: (UiState<String>) -> Unit) {
-        if (binding.firstNameEditText.text.isNullOrEmpty()){
+    fun validation(firstName: Editable?, lastName: Editable?, email: Editable?, password: Editable?, result: (UiState<String>) -> Unit) {
+        if (firstName.isNullOrEmpty()){
             result.invoke(UiState.Failure(
-                UiString.StringResources(R.string.enter_first_name).asString(context)
+                UiString.StringResources(R.string.enter_first_name).asString(application)
             ))
             return
         }
-        if (binding.lastNameEditText.text.isNullOrEmpty()){
+        if (lastName.isNullOrEmpty()){
             result.invoke(UiState.Failure(
-                UiString.StringResources(R.string.enter_last_name).asString(context)
+                UiString.StringResources(R.string.enter_last_name).asString(application)
             ))
             return
         }
-        if (binding.emailEditText.text.isNullOrEmpty()){
+        if (email.isNullOrEmpty()){
             result.invoke(UiState.Failure(
-                UiString.StringResources(R.string.enter_email).asString(context)
+                UiString.StringResources(R.string.enter_email).asString(application)
             ))
             return
         }else {
-            if (!binding.emailEditText.text.toString().isValidEmail()){
+            if (!email.toString().isValidEmail()){
                 result.invoke(UiState.Failure(
-                    UiString.StringResources(R.string.invalid_email).asString(context)
+                    UiString.StringResources(R.string.invalid_email).asString(application)
                 ))
                 return
             }
         }
-        if (binding.passwordEditText.text.isNullOrEmpty()){
+        if (password.isNullOrEmpty()){
             result.invoke(UiState.Failure(
-                UiString.StringResources(R.string.enter_password).asString(context)
+                UiString.StringResources(R.string.enter_password).asString(application)
             ))
             return
         }else{
-            if (binding.passwordEditText.text.toString().length < 6){
+            if (password.toString().length < 6){
                 result.invoke(UiState.Failure(
-                    UiString.StringResources(R.string.invalid_password).asString(context)
+                    UiString.StringResources(R.string.invalid_password).asString(application)
                 ))
                 return
             }else {
-                if(!binding.passwordEditText.text.toString().hasUpperCase()){
+                if(!password.toString().hasUpperCase()){
                     result.invoke(UiState.Failure(
-                        UiString.StringResources(R.string.has_not_uppercase).asString(context)
+                        UiString.StringResources(R.string.has_not_uppercase).asString(application)
                     ))
                     return
                 }else {
-                    if(!binding.passwordEditText.text.toString().hasDigit()){
+                    if(!password.toString().hasDigit()){
                         result.invoke(UiState.Failure(
-                            UiString.StringResources(R.string.has_not_digit).asString(context)
+                            UiString.StringResources(R.string.has_not_digit).asString(application)
                         ))
                         return
                     }

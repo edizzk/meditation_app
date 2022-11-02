@@ -24,7 +24,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
         observer()
         baseBinding.apply {
             loginButton.setOnClickListener{
-                baseViewModel.validation(baseBinding, requireContext()){
+                baseViewModel.validation(emailEditText.text, passwordEditText.text){
                     when(it) {
                         is UiState.Success -> {
                             errorCardView.visibility = View.GONE

@@ -17,9 +17,12 @@ import androidx.fragment.app.viewModels
 import com.android.volley.toolbox.Volley
 import com.example.meditation_app.R
 import com.example.meditation_app.base.BaseFragment
-import com.example.meditation_app.databinding.FragmentRegisterBinding
 import com.example.meditation_app.data.model.User
-import com.example.meditation_app.utils.*
+import com.example.meditation_app.databinding.FragmentRegisterBinding
+import com.example.meditation_app.utils.UiState
+import com.example.meditation_app.utils.UiString
+import com.example.meditation_app.utils.notAvailableAlert
+import com.example.meditation_app.utils.toast
 import com.example.meditation_app.view.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,15 +38,16 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding, RegisterViewModel
         val queue = Volley.newRequestQueue(requireContext())
         observer()
         baseBinding.apply {
-            conditionText1.setText(conditionText1.text.toString().makeItUnderlineAndBold(), TextView.BufferType.SPANNABLE)
+            conditionText1.setText(
+                conditionText1.text.toString().makeItUnderlineAndBold(),
+                TextView.BufferType.SPANNABLE
+            )
             conditionText1.movementMethod = LinkMovementMethod.getInstance()
-            reCaptcha.setOnClickListener{
-                if(!reCaptcha.isChecked) {
-                    return@setOnClickListener
-                }
+            reCaptcha.setOnClickListener {
+                if (!reCaptcha.isChecked) return@setOnClickListener
                 reCaptcha.isChecked = false
                 baseViewModel.captcha(requireActivity(), queue) {
-                    when(it){
+                    when (it) {
                         is UiState.Success -> {
                             reCaptcha.isChecked = true
                         }
@@ -55,18 +59,22 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding, RegisterViewModel
                 }
             }
             registerButton.setOnClickListener {
-                if(!(conditionCheckBox1.isChecked && conditionCheckBox2.isChecked)) {
+                if (!(conditionCheckBox1.isChecked && conditionCheckBox2.isChecked)) {
                     errorCardView.visibility = View.VISIBLE
-                    errorCardText.text = UiString.StringResources(R.string.approve_terms_and_conditions).asString(requireContext())
+                    errorCardText.text = UiString.StringResources(R.string.approve_terms_and_conditions)
+                        .asString(requireContext())
                     return@setOnClickListener
                 }
-                if(!reCaptcha.isChecked) {
+                if (!reCaptcha.isChecked) {
                     errorCardView.visibility = View.VISIBLE
-                    errorCardText.text = UiString.StringResources(R.string.error_recaptcha).asString(requireContext())
+                    errorCardText.text = UiString.StringResources(R.string.error_recaptcha)
+                        .asString(requireContext())
                     return@setOnClickListener
                 }
-                baseViewModel.validation(baseBinding, requireContext()){
-                    when(it) {
+                baseViewModel.validation(
+                    firstNameEditText.text, lastNameEditText.text, emailEditText.text, passwordEditText.text
+                ) {
+                    when (it) {
                         is UiState.Success -> {
                             errorCardView.visibility = View.GONE
                             baseViewModel.register(
