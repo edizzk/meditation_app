@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.meditation_app.data.model.Meditations
 import com.example.meditation_app.databinding.ItemMeditationsBinding
 
@@ -39,6 +40,7 @@ class MeditationsAdapter: RecyclerView.Adapter<MeditationsAdapter.MyViewHolder>(
         holder.binding.apply {
             titleTextMed.text = currentMed.name
             subtitleTextMed.text = currentMed.subtitle
+            Glide.with(imageViewMed).load(currentMed.image).into(imageViewMed)
         }
     }
 

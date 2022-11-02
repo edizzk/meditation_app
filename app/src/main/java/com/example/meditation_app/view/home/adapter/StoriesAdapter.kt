@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.meditation_app.data.model.Stories
 import com.example.meditation_app.databinding.ItemStoriesBinding
 
@@ -39,6 +40,7 @@ class StoriesAdapter: RecyclerView.Adapter<StoriesAdapter.MyViewHolder>() {
         holder.binding.apply {
             titleTextStory.text = currentStory.name
             subtitleTextStory.text = currentStory.subtitle
+            Glide.with(imageViewStory).load(currentStory.image).into(imageViewStory)
         }
     }
 
