@@ -42,8 +42,28 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding, DetailsViewModel>()
             }
             dateTimeText.text = dateFormatter()
         }
-
-
+        playAudio()
     }
 
+    private fun playAudio() {
+        baseViewModel.mediaPlayer.observe(this) { state ->
+            if (state != null){
+                baseBinding.apply {
+                    imageCardDetail.setOnClickListener{
+                        if (isActive) {
+                            imageView.setImageResource(R.drawable.ic_baseline_play_arrow_30)
+                            scrollView.background.alpha = 255
+                            baseViewModel.mediaPlayer.value!!.pause()
+                        }
+                        else {
+                            imageView.setImageResource(R.drawable.ic_baseline_pause_30)
+                            scrollView.background.alpha = 128
+                            baseViewModel.mediaPlayer.value!!.start()
+                        }
+                        isActive = !isActive
+                    }
+                }
+            }
+        }
+    }
 }

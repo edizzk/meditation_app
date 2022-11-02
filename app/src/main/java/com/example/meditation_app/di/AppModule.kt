@@ -2,6 +2,7 @@ package com.example.meditation_app.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.meditation_app.service.MediaPlayerService
 import com.example.meditation_app.service.RecaptchaService
 import com.example.meditation_app.utils.SharedPrefConstants.LOCAL_SHARED_PREF
 import com.google.gson.Gson
@@ -30,4 +31,8 @@ object AppModule {
     @Provides
     @Singleton
     fun provideRecaptchaService(): RecaptchaService = RecaptchaService()
+
+    @Provides
+    @Singleton
+    fun provideMediaPlayerService(): MediaPlayerService = MediaPlayerService()
 }
