@@ -18,34 +18,34 @@ class LoginViewModel @Inject constructor(
     private val application: Application
 ): BaseViewModel(){
 
-    private val _login = MutableLiveData<UiState<String>>()
-    val login: LiveData<UiState<String>>
+    private val _login = MutableLiveData<Resource<String>>()
+    val login: LiveData<Resource<String>>
         get() = _login
 
     fun login(email: String,password: String, rememberMe: Boolean) =
         repository.loginUser(email, password, rememberMe){ _login.value = it }
 
-    fun validation(email: Editable?, password: Editable?, result: (UiState<String>) -> Unit) {
+    fun validation(email: Editable?, password: Editable?, result: (Resource<String>) -> Unit) {
         if (email.isNullOrEmpty()){
-            result.invoke(UiState.Failure(
+            result.invoke(Resource.Failure(
                 UiString.StringResources(R.string.enter_email).asString(application)
             ))
             return
         }else {
             if (!email.toString().isValidEmail()){
-                result.invoke(UiState.Failure(
+                result.invoke(Resource.Failure(
                     UiString.StringResources(R.string.invalid_email).asString(application)
                 ))
                 return
             }
         }
         if (password.isNullOrEmpty()){
-            result.invoke(UiState.Failure(
+            result.invoke(Resource.Failure(
                 UiString.StringResources(R.string.enter_password).asString(application)
             ))
             return
         }
-        result.invoke(UiState.Success(""))
+        result.invoke(Resource.Success(""))
         Log.d(TAG, "Validation Successfully")
     }
 

@@ -7,7 +7,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import com.example.meditation_app.base.BaseFragment
 import com.example.meditation_app.databinding.FragmentLoginBinding
-import com.example.meditation_app.utils.UiState
+import com.example.meditation_app.utils.Resource
 import com.example.meditation_app.utils.toast
 import com.example.meditation_app.view.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,7 +26,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
             loginButton.setOnClickListener{
                 baseViewModel.validation(emailEditText.text, passwordEditText.text){
                     when(it) {
-                        is UiState.Success -> {
+                        is Resource.Success -> {
                             errorCardView.visibility = View.GONE
                             baseViewModel.login(
                                 email = emailEditText.text.toString(),
@@ -34,7 +34,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
                                 rememberMe = rememberMeCheckbox.isChecked
                             )
                         }
-                        is UiState.Failure -> {
+                        is Resource.Failure -> {
                             errorCardView.visibility = View.VISIBLE
                             errorCardText.text = it.error
                         }
@@ -47,12 +47,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
     private fun observer(){
         baseViewModel.login.observe(viewLifecycleOwner) { state ->
             when(state){
-                is UiState.Failure -> {
+                is Resource.Failure -> {
                     baseBinding.errorCardView.visibility = View.VISIBLE
                     baseBinding.errorCardText.text = state.error
                     Log.d(TAG, "Login Failure: ${state.error}")
                 }
-                is UiState.Success -> {
+                is Resource.Success -> {
                     baseBinding.errorCardView.visibility = View.GONE
                     Intent(requireContext(), HomeActivity::class.java).also { startActivity(it)}
                     requireActivity().finish()

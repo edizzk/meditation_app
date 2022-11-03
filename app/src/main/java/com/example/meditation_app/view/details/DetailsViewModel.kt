@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.meditation_app.base.BaseViewModel
 import com.example.meditation_app.service.MediaPlayerService
-import com.example.meditation_app.utils.UiState
+import com.example.meditation_app.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,8 +28,8 @@ class DetailsViewModel @Inject constructor(
     private fun prepareMediaPlayer() = viewModelScope.launch {
         mediaPlayerService.prepareMediaPlayer { state ->
             when(state) {
-                is UiState.Success -> _mediaPlayer.postValue(state.data)
-                is UiState.Failure -> Log.d(TAG, "playAudio() Failure: ${state.error}")
+                is Resource.Success -> _mediaPlayer.postValue(state.data)
+                is Resource.Failure -> Log.d(TAG, "playAudio() Failure: ${state.error}")
             }
         }
     }

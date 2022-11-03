@@ -19,7 +19,7 @@ import com.example.meditation_app.R
 import com.example.meditation_app.base.BaseFragment
 import com.example.meditation_app.data.model.User
 import com.example.meditation_app.databinding.FragmentRegisterBinding
-import com.example.meditation_app.utils.UiState
+import com.example.meditation_app.utils.Resource
 import com.example.meditation_app.utils.UiString
 import com.example.meditation_app.utils.notAvailableAlert
 import com.example.meditation_app.utils.toast
@@ -48,10 +48,10 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding, RegisterViewModel
                 reCaptcha.isChecked = false
                 baseViewModel.captcha(requireActivity(), queue) {
                     when (it) {
-                        is UiState.Success -> {
+                        is Resource.Success -> {
                             reCaptcha.isChecked = true
                         }
-                        is UiState.Failure -> {
+                        is Resource.Failure -> {
                             toast(it.error)
                             reCaptcha.isChecked = false
                         }
@@ -75,7 +75,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding, RegisterViewModel
                     firstNameEditText.text, lastNameEditText.text, emailEditText.text, passwordEditText.text
                 ) {
                     when (it) {
-                        is UiState.Success -> {
+                        is Resource.Success -> {
                             errorCardView.visibility = View.GONE
                             baseViewModel.register(
                                 email = emailEditText.text.toString(),
@@ -83,7 +83,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding, RegisterViewModel
                                 user = getUserObj()
                             )
                         }
-                        is UiState.Failure -> {
+                        is Resource.Failure -> {
                             errorCardView.visibility = View.VISIBLE
                             errorCardText.text = it.error
                             Log.d(TAG, "Failure:  ${it.error}")
@@ -97,11 +97,11 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding, RegisterViewModel
     private fun observer() {
         baseViewModel.register.observe(viewLifecycleOwner) { state ->
             when (state) {
-                is UiState.Failure -> {
+                is Resource.Failure -> {
                     baseBinding.errorCardView.visibility = View.VISIBLE
                     baseBinding.errorCardText.text = state.error
                 }
-                is UiState.Success -> {
+                is Resource.Success -> {
                     baseBinding.errorCardView.visibility = View.GONE
                     Intent(requireContext(), HomeActivity::class.java).also { startActivity(it) }
                     requireActivity().finish()

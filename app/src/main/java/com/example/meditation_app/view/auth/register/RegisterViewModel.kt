@@ -23,64 +23,64 @@ class RegisterViewModel @Inject constructor(
     private val application: Application
 ): BaseViewModel(){
 
-    private val _register = MutableLiveData<UiState<String>>()
-    val register: LiveData<UiState<String>>
+    private val _register = MutableLiveData<Resource<String>>()
+    val register: LiveData<Resource<String>>
         get() = _register
 
     fun register(email: String, password: String, user: User) {
         repository.registerUser(email, password, user) { _register.value = it }
     }
 
-    fun captcha(activity: FragmentActivity, queue: RequestQueue, result: (UiState<String>) -> Unit) {
+    fun captcha(activity: FragmentActivity, queue: RequestQueue, result: (Resource<String>) -> Unit) {
         recaptchaService.captcha(activity, queue){result.invoke(it)}
     }
 
-    fun validation(firstName: Editable?, lastName: Editable?, email: Editable?, password: Editable?, result: (UiState<String>) -> Unit) {
+    fun validation(firstName: Editable?, lastName: Editable?, email: Editable?, password: Editable?, result: (Resource<String>) -> Unit) {
         if (firstName.isNullOrEmpty()){
-            result.invoke(UiState.Failure(
+            result.invoke(Resource.Failure(
                 UiString.StringResources(R.string.enter_first_name).asString(application)
             ))
             return
         }
         if (lastName.isNullOrEmpty()){
-            result.invoke(UiState.Failure(
+            result.invoke(Resource.Failure(
                 UiString.StringResources(R.string.enter_last_name).asString(application)
             ))
             return
         }
         if (email.isNullOrEmpty()){
-            result.invoke(UiState.Failure(
+            result.invoke(Resource.Failure(
                 UiString.StringResources(R.string.enter_email).asString(application)
             ))
             return
         }else {
             if (!email.toString().isValidEmail()){
-                result.invoke(UiState.Failure(
+                result.invoke(Resource.Failure(
                     UiString.StringResources(R.string.invalid_email).asString(application)
                 ))
                 return
             }
         }
         if (password.isNullOrEmpty()){
-            result.invoke(UiState.Failure(
+            result.invoke(Resource.Failure(
                 UiString.StringResources(R.string.enter_password).asString(application)
             ))
             return
         }else{
             if (password.toString().length < 6){
-                result.invoke(UiState.Failure(
+                result.invoke(Resource.Failure(
                     UiString.StringResources(R.string.invalid_password).asString(application)
                 ))
                 return
             }else {
                 if(!password.toString().hasUpperCase()){
-                    result.invoke(UiState.Failure(
+                    result.invoke(Resource.Failure(
                         UiString.StringResources(R.string.has_not_uppercase).asString(application)
                     ))
                     return
                 }else {
                     if(!password.toString().hasDigit()){
-                        result.invoke(UiState.Failure(
+                        result.invoke(Resource.Failure(
                             UiString.StringResources(R.string.has_not_digit).asString(application)
                         ))
                         return
@@ -88,7 +88,7 @@ class RegisterViewModel @Inject constructor(
                 }
             }
         }
-        result.invoke(UiState.Success(""))
+        result.invoke(Resource.Success(""))
         Log.d(TAG, "Validation Successfully")
     }
 

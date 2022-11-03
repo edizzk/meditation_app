@@ -4,7 +4,7 @@ import com.example.meditation_app.data.model.Meditations
 import com.example.meditation_app.data.model.Stories
 import com.example.meditation_app.data.model.User
 import com.example.meditation_app.utils.FireStoreCollection
-import com.example.meditation_app.utils.UiState
+import com.example.meditation_app.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -21,7 +21,7 @@ class FirebaseDataSourceImpl @Inject constructor(
     override fun registerUser(
         email: String,
         password: String,
-        user: User, result: (UiState<String>) -> Unit
+        user: User, result: (Resource<String>) -> Unit
     ) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener{
@@ -29,49 +29,49 @@ class FirebaseDataSourceImpl @Inject constructor(
                     user.id = it.result.user?.uid ?: ""
                     addUser(user) { state ->
                         when(state){
-                            is UiState.Success -> {result.invoke(UiState.Success("User registered successfully!"))}
-                            is UiState.Failure -> {result.invoke(UiState.Failure(state.error))}
+                            is Resource.Success -> {result.invoke(Resource.Success("User registered successfully!"))}
+                            is Resource.Failure -> {result.invoke(Resource.Failure(state.error))}
                         }
                     }
                 }else {
                     try {
                         throw it.exception ?: Exception("Invalid authentication")
                     } catch (e: FirebaseAuthWeakPasswordException) {
-                        result.invoke(UiState.Failure("Authentication failed, password should be at least 6 characters"))
+                        result.invoke(Resource.Failure("Authentication failed, password should be at least 6 characters"))
                     } catch (e: FirebaseAuthInvalidCredentialsException) {
-                        result.invoke(UiState.Failure("Authentication failed, invalid email entered"))
+                        result.invoke(Resource.Failure("Authentication failed, invalid email entered"))
                     } catch (e: FirebaseAuthUserCollisionException) {
-                        result.invoke(UiState.Failure("Authentication failed, email already registered"))
+                        result.invoke(Resource.Failure("Authentication failed, email already registered"))
                     } catch (e: Exception) {
-                        result.invoke(UiState.Failure(e.message))
+                        result.invoke(Resource.Failure(e.message))
                     }
                 }
             }
-            .addOnFailureListener {result.invoke(UiState.Failure(it.localizedMessage))}
+            .addOnFailureListener {result.invoke(Resource.Failure(it.localizedMessage))}
     }
 
     override fun loginUser(
         email: String,
         password: String,
-        result: (UiState<String>) -> Unit) {
+        result: (Resource<String>) -> Unit) {
         auth.signInWithEmailAndPassword(email,password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    result.invoke(UiState.Success(task.result.user?.uid ?: ""))
+                    result.invoke(Resource.Success(task.result.user?.uid ?: ""))
                 }
             }
-            .addOnFailureListener {result.invoke(UiState.Failure("Authentication failed, Check email and password"))}
+            .addOnFailureListener {result.invoke(Resource.Failure("Authentication failed, Check email and password"))}
     }
 
-    override fun addUser(user: User, result: (UiState<String>) -> Unit) {
+    override fun addUser(user: User, result: (Resource<String>) -> Unit) {
         val document = database.collection(FireStoreCollection.USER).document(user.id!!)
         document
             .set(user)
-            .addOnSuccessListener{result.invoke(UiState.Success("User has been update successfuly"))}
-            .addOnFailureListener{result.invoke(UiState.Failure(it.localizedMessage))}
+            .addOnSuccessListener{result.invoke(Resource.Success("User has been update successfuly"))}
+            .addOnFailureListener{result.invoke(Resource.Failure(it.localizedMessage))}
     }
 
-    override fun getCurrentUser(result: (UiState<User?>) -> Unit) {
+    override fun getCurrentUser(result: (Resource<User?>) -> Unit) {
         val userId = auth.currentUser?.uid
         if (userId != null)
             database.collection(FireStoreCollection.USER).document(userId)
@@ -79,13 +79,13 @@ class FirebaseDataSourceImpl @Inject constructor(
                 .addOnCompleteListener {
                     if (it.isSuccessful){
                         val user = it.result.toObject<User>()
-                        result.invoke(UiState.Success(user))
+                        result.invoke(Resource.Success(user))
                     }else{
-                        result.invoke(UiState.Failure(it.exception.toString()))
+                        result.invoke(Resource.Failure(it.exception.toString()))
                     }
                 }
-                .addOnFailureListener{result.invoke(UiState.Failure(it.message))}
-        else result.invoke(UiState.Failure("userId is null"))
+                .addOnFailureListener{result.invoke(Resource.Failure(it.message))}
+        else result.invoke(Resource.Failure("userId is null"))
 
     }
 
@@ -93,7 +93,7 @@ class FirebaseDataSourceImpl @Inject constructor(
         auth.signOut()
     }
 
-    override fun getAllMeditations(result: (UiState<List<Meditations>>) -> Unit) {
+    override fun getAllMeditations(result: (Resource<List<Meditations>>) -> Unit) {
         database.collection(FireStoreCollection.MED)
             .get()
             .addOnSuccessListener{
@@ -102,12 +102,12 @@ class FirebaseDataSourceImpl @Inject constructor(
                     val med = doc.toObject(Meditations::class.java)
                     medList.add(med)
                 }
-                result.invoke(UiState.Success(medList))
+                result.invoke(Resource.Success(medList))
             }
-            .addOnFailureListener { result.invoke(UiState.Failure(it.localizedMessage)) }
+            .addOnFailureListener { result.invoke(Resource.Failure(it.localizedMessage)) }
     }
 
-    override fun getAllStories(result: (UiState<List<Stories>>) -> Unit) {
+    override fun getAllStories(result: (Resource<List<Stories>>) -> Unit) {
         database.collection(FireStoreCollection.STORY)
             .get()
             .addOnSuccessListener{
@@ -116,8 +116,8 @@ class FirebaseDataSourceImpl @Inject constructor(
                     val story = doc.toObject(Stories::class.java)
                     storyList.add(story)
                 }
-                result.invoke(UiState.Success(storyList))
+                result.invoke(Resource.Success(storyList))
             }
-            .addOnFailureListener { result.invoke(UiState.Failure(it.localizedMessage)) }
+            .addOnFailureListener { result.invoke(Resource.Failure(it.localizedMessage)) }
     }
 }

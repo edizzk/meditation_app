@@ -11,7 +11,7 @@ import com.example.meditation_app.data.model.User
 import com.example.meditation_app.data.repository.AuthRepository
 import com.example.meditation_app.data.repository.MeditationsRepository
 import com.example.meditation_app.data.repository.StoriesRepository
-import com.example.meditation_app.utils.UiState
+import com.example.meditation_app.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -44,8 +44,8 @@ class HomeViewModel @Inject constructor(
     private fun getCurrentUser() = viewModelScope.launch {
         authRepository.getCurrentUser { state ->
             when(state) {
-                is UiState.Success -> _currentUser.postValue(state.data)
-                is UiState.Failure -> Log.d(TAG, "getCurrentUser Failure: ${state.error}")
+                is Resource.Success -> _currentUser.postValue(state.data)
+                is Resource.Failure -> Log.d(TAG, "getCurrentUser Failure: ${state.error}")
             }
         }
     }
@@ -53,8 +53,8 @@ class HomeViewModel @Inject constructor(
     private fun getAllMeditations() = viewModelScope.launch {
         medRepository.getAllMeditations { state ->
             when(state) {
-                is UiState.Success -> _responseMed.postValue(state.data)
-                is UiState.Failure -> Log.d(TAG, "getAllMeditations Failure: ${state.error}")
+                is Resource.Success -> _responseMed.postValue(state.data)
+                is Resource.Failure -> Log.d(TAG, "getAllMeditations Failure: ${state.error}")
             }
         }
     }
@@ -62,8 +62,8 @@ class HomeViewModel @Inject constructor(
     private fun getAllStories() = viewModelScope.launch {
         storyRepository.getAllStories { state ->
             when(state) {
-                is UiState.Success -> _responseStory.postValue(state.data)
-                is UiState.Failure -> Log.d(TAG, "getAllStories Failure: ${state.error}")
+                is Resource.Success -> _responseStory.postValue(state.data)
+                is Resource.Failure -> Log.d(TAG, "getAllStories Failure: ${state.error}")
             }
         }
     }

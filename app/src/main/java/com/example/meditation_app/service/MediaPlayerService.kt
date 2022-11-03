@@ -2,12 +2,12 @@ package com.example.meditation_app.service
 
 import android.media.AudioAttributes
 import android.media.MediaPlayer
-import com.example.meditation_app.utils.UiState
+import com.example.meditation_app.utils.Resource
 import com.example.meditation_app.utils.mediaPlayerUrl
 
 class MediaPlayerService {
 
-    fun prepareMediaPlayer(result: (UiState<MediaPlayer?>) -> Unit) {
+    fun prepareMediaPlayer(result: (Resource<MediaPlayer?>) -> Unit) {
         val mediaPlayer = MediaPlayer()
         try {
             mediaPlayer.reset()
@@ -20,9 +20,9 @@ class MediaPlayerService {
                 setDataSource(mediaPlayerUrl)
                 prepareAsync()
             }
-            result.invoke(UiState.Success(mediaPlayer))
+            result.invoke(Resource.Success(mediaPlayer))
         } catch (exception: Exception){
-            result.invoke(UiState.Failure(exception.message))
+            result.invoke(Resource.Failure(exception.message))
         }
     }
 
