@@ -10,13 +10,16 @@ class MediaPlayerService {
     fun prepareMediaPlayer(result: (UiState<MediaPlayer?>) -> Unit) {
         val mediaPlayer = MediaPlayer()
         try {
+            mediaPlayer.reset()
             mediaPlayer.setAudioAttributes(
                 AudioAttributes.Builder()
                     .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                     .build()
             )
-            mediaPlayer.setDataSource(mediaPlayerUrl)
-            mediaPlayer.prepare()
+            mediaPlayer.run {
+                setDataSource(mediaPlayerUrl)
+                prepareAsync()
+            }
             result.invoke(UiState.Success(mediaPlayer))
         } catch (exception: Exception){
             result.invoke(UiState.Failure(exception.message))
