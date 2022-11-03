@@ -3,13 +3,17 @@ package com.example.meditation_app.view.home
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.meditation_app.base.BaseActivity
+import com.example.meditation_app.data.model.Meditations
+import com.example.meditation_app.data.model.Stories
 import com.example.meditation_app.databinding.ActivityHomeBinding
 import com.example.meditation_app.utils.FireStoreCollection.MED
 import com.example.meditation_app.utils.FireStoreCollection.STORY
 import com.example.meditation_app.utils.IntentConstants.OBJECT
 import com.example.meditation_app.utils.IntentConstants.OBJECT_TYPE
+import com.example.meditation_app.utils.Resource
 import com.example.meditation_app.view.details.DetailsActivity
 import com.example.meditation_app.view.home.adapter.MeditationsAdapter
 import com.example.meditation_app.view.home.adapter.OnAdapterItemClickListener
@@ -56,12 +60,39 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>() {
             })
         }
 
-        baseViewModel.currentUser.observe(this) { user ->
-            if (user != null) baseBinding.cardView.visibility =
-                if (user.vip == true) View.GONE else View.VISIBLE
+        baseViewModel.apply {
+            currentUser.observe(this@HomeActivity) { user ->
+                if (user != null) baseBinding.bannerView.visibility =
+                    if (user.vip == true) View.GONE else View.VISIBLE
+            }
+            stateMed.observe(this@HomeActivity) { state ->
+                if(!state.isLoading) {
+                    when (state.data) {
+                        is Resource.Success<*> -> {
+                            baseBinding.medRecyclerProgressBar.visibility = View.GONE
+                            baseBinding.medRecycler.visibility = View.VISIBLE
+                            medAdapter.medList = state.data.data as List<Meditations>
+                        }
+                        is Resource.Failure -> {
+                            Toast.makeText(this@HomeActivity, "${state.data.error}", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+            }
+            stateStory.observe(this@HomeActivity) { state ->
+                if(!state.isLoading) {
+                    when (state.data) {
+                        is Resource.Success<*> -> {
+                            baseBinding.storyRecyclerProgressBar.visibility = View.GONE
+                            baseBinding.storyRecycler.visibility = View.VISIBLE
+                            storyAdapter.storyList = state.data.data as List<Stories>
+                        }
+                        is Resource.Failure -> {
+                            Toast.makeText(this@HomeActivity, "${state.data.error}", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+            }
         }
-        baseViewModel.responseMed.observe(this) { if (it != null) medAdapter.medList = it }
-        baseViewModel.responseStory.observe(this) { if (it != null) storyAdapter.storyList = it }
-
     }
 }

@@ -31,21 +31,36 @@
             android:layout_marginTop="16dp"
             android:nestedScrollingEnabled="false"
             android:orientation="horizontal"
+            android:visibility="invisible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@+id/tv_meditations"
-            tools:listitem="@layout/item_meditations" />
+            tools:listitem="@layout/item_meditations"
+            tools:visibility="visible" />
+
+        <ProgressBar
+            android:id="@+id/medRecyclerProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintBottom_toTopOf="@+id/bannerView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_meditations"
+            tools:visibility="gone" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
+            android:id="@+id/bannerView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="24dp"
+            android:visibility="invisible"
             app:cardBackgroundColor="@color/banner_background"
             app:cardCornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/medRecycler">
+            app:layout_constraintTop_toBottomOf="@+id/medRecycler"
+            tools:visibility="visible">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -90,7 +105,7 @@
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView" />
+            app:layout_constraintTop_toBottomOf="@+id/bannerView" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/storyRecycler"
@@ -99,10 +114,23 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
             android:nestedScrollingEnabled="false"
+            android:visibility="invisible"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintTop_toBottomOf="@+id/tv_stories"
             app:spanCount="2"
-            tools:listitem="@layout/item_stories" />
+            tools:listitem="@layout/item_stories"
+            tools:visibility="visible" />
+
+        <ProgressBar
+            android:id="@+id/storyRecyclerProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_stories"
+            tools:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
