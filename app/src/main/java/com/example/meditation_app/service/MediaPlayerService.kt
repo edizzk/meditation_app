@@ -10,7 +10,6 @@ class MediaPlayerService {
     fun prepareMediaPlayer(result: (Resource<MediaPlayer?>) -> Unit) {
         val mediaPlayer = MediaPlayer()
         try {
-            mediaPlayer.reset()
             mediaPlayer.setAudioAttributes(
                 AudioAttributes.Builder()
                     .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
@@ -19,8 +18,10 @@ class MediaPlayerService {
             mediaPlayer.run {
                 setDataSource(mediaPlayerUrl)
                 prepareAsync()
+                setOnPreparedListener {
+                    result.invoke(Resource.Success(mediaPlayer))
+                }
             }
-            result.invoke(Resource.Success(mediaPlayer))
         } catch (exception: Exception){
             result.invoke(Resource.Failure(exception.message))
         }
