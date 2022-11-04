@@ -31,6 +31,7 @@ class OnBoardingActivity : BaseActivity<ActivityOnBoardingBinding, OnBoardingVie
         baseBinding.cardOnBoarding.setOnClickListener {
             baseViewModel.saveOnBoardingStatePref(false)
             Intent(applicationContext, AuthActivity::class.java).apply {startActivity(this)}
+            finish()
         }
     }
 
