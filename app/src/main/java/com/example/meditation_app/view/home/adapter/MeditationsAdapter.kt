@@ -38,8 +38,7 @@ class MeditationsAdapter: RecyclerView.Adapter<MeditationsAdapter.MyViewHolder>(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentMed = medList[position]
         holder.binding.apply {
-            titleTextMed.text = currentMed.getName()
-            subtitleTextMed.text = currentMed.getSubTitle()
+            item = currentMed
             Glide.with(imageViewMed).load(currentMed.getImage()).into(imageViewMed)
         }
     }

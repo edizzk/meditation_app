@@ -107,19 +107,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bannerView" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/storyRecycler"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
-            android:nestedScrollingEnabled="false"
-            android:visibility="invisible"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintTop_toBottomOf="@+id/tv_stories"
-            app:spanCount="2"
-            tools:listitem="@layout/item_stories"
-            tools:visibility="visible" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_stories">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/storyRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:orientation="vertical"
+                android:visibility="invisible"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                tools:listitem="@layout/item_stories"
+                tools:visibility="visible" />
+        </RelativeLayout>
+
 
         <ProgressBar
             android:id="@+id/storyRecyclerProgressBar"

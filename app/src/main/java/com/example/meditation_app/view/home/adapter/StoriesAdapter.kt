@@ -38,8 +38,7 @@ class StoriesAdapter: RecyclerView.Adapter<StoriesAdapter.MyViewHolder>() {
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentStory = storyList[position]
         holder.binding.apply {
-            titleTextStory.text = currentStory.getName()
-            subtitleTextStory.text = currentStory.getSubTitle()
+            item = currentStory
             Glide.with(imageViewStory).load(currentStory.getImage()).into(imageViewStory)
         }
     }

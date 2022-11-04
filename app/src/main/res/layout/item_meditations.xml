@@ -1,39 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginEnd="16dp"
-    app:cardBackgroundColor="@android:color/transparent"
-    app:cardElevation="0dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <data>
+        <variable
+            name="item"
+            type="com.example.meditation_app.data.model.Meditations" />
+    </data>
 
-        <ImageView
-            android:id="@+id/imageViewMed"
-            android:layout_width="156dp"
-            android:layout_height="219dp"
-            android:src="@drawable/onboarding1"
-            tools:ignore="ContentDescription" />
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardElevation="0dp">
 
-        <TextView
-            android:id="@+id/titleTextMed"
-            android:layout_width="156dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/subtitleTextMed"
-            android:layout_width="156dp"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+            <ImageView
+                android:id="@+id/imageViewMed"
+                android:layout_width="156dp"
+                android:layout_height="219dp"
+                android:src="@drawable/onboarding1"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/titleTextMed"
+                android:layout_width="156dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="@{item.name}" />
+
+            <TextView
+                android:id="@+id/subtitleTextMed"
+                android:layout_width="156dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:text="@{item.subTitle}" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</layout>
