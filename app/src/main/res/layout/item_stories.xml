@@ -1,46 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="8dp"
-    android:layout_marginBottom="32dp"
-    app:cardBackgroundColor="@android:color/transparent"
-    app:cardElevation="0dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <data>
+        <variable
+            name="item"
+            type="com.example.meditation_app.data.model.Stories" />
+    </data>
 
-        <ImageView
-            android:id="@+id/imageViewStory"
-            android:layout_width="175.5dp"
-            android:layout_height="156dp"
-            android:src="@drawable/onboarding2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginBottom="32dp"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardElevation="0dp">
 
-        <TextView
-            android:id="@+id/titleTextStory"
-            android:layout_width="175.5dp"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@id/imageViewStory"
-            app:layout_constraintStart_toStartOf="@id/imageViewStory"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/subtitleTextStory"
-            android:layout_width="175.5dp"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            app:layout_constraintTop_toBottomOf="@id/titleTextStory"
-            app:layout_constraintStart_toStartOf="@id/titleTextStory"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+            <ImageView
+                android:id="@+id/imageViewStory"
+                android:layout_width="175.5dp"
+                android:layout_height="156dp"
+                android:src="@drawable/onboarding2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/titleTextStory"
+                android:layout_width="175.5dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="@{item.name}"
+                app:layout_constraintStart_toStartOf="@id/imageViewStory"
+                app:layout_constraintTop_toBottomOf="@id/imageViewStory" />
+
+            <TextView
+                android:id="@+id/subtitleTextStory"
+                android:layout_width="175.5dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:text="@{item.subTitle}"
+                app:layout_constraintStart_toStartOf="@id/titleTextStory"
+                app:layout_constraintTop_toBottomOf="@id/titleTextStory" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
